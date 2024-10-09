@@ -14,11 +14,15 @@ public class EnemyMovement : MonoBehaviour
     private int pathIndex = 0;
 
     private float baseSpeed;
+    private Transform[] currentPath;  // Store the current path
 
     private void Start()
     {
         baseSpeed = moveSpeed;
-        target = LevelManager.main.path[pathIndex];
+
+        // Get the currently selected path from LevelManager
+        currentPath = LevelManager.main.GetSelectedPath();
+        target = currentPath[pathIndex];
     }
 
     private void Update()
@@ -27,22 +31,22 @@ public class EnemyMovement : MonoBehaviour
         {
             pathIndex++;
 
-            if (pathIndex == LevelManager.main.path.Length)
+            if (pathIndex == currentPath.Length)
             {
                 EnemySpawner.onEnemyDestroy.Invoke();
-                Destroy(gameObject); //when we get to the end, we destroy the game object
+                Destroy(gameObject); // Destroy the game object when reaching the end
                 return;
             }
             else
             {
-                target = LevelManager.main.path[pathIndex];
+                target = currentPath[pathIndex];
             }
         }
     }
+
     private void FixedUpdate()
     {
         Vector2 direction = (target.position - transform.position).normalized;
-
         rb.velocity = direction * moveSpeed;
     }
 
@@ -56,3 +60,4 @@ public class EnemyMovement : MonoBehaviour
         moveSpeed = baseSpeed;
     }
 }
+
