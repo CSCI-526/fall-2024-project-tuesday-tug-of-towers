@@ -11,7 +11,8 @@ public class EnemySpawner : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] private int baseEnemies = 8;
     [SerializeField] private float enemiesPerSecond = 0.5f;
-    [SerializeField] private float timeBetweenWaves = 5f;
+    [SerializeField] private float timeBetweenWaves = 0f;
+    //[SerializeField] private float timeBetweenWaves = 5f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
     [SerializeField] private float enemiesPerSecondCap = 15f;
 
@@ -55,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    private void EnemyDestroyed() //call this anytime we destroy an enemy
+    private void EnemyDestroyed() //destroy an enemy
     {
         enemiesAlive--;
     }
@@ -78,12 +79,16 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(StartWave()); //starts sending 8 enemies again (after all enemy object dies)
     }
 
+
     private void SpawnEnemy()
     {
         int index = Random.Range(0, enemyPrefabs.Length);
         GameObject prefabToSpawn = enemyPrefabs[index];
-        Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
+
+        // Use the selected start point from the LevelManager
+        Instantiate(prefabToSpawn, LevelManager.main.GetSelectedStartPoint().position, Quaternion.identity);
     }
+
 
     private int EnemiesPerWave()
     {
