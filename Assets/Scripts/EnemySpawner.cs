@@ -48,7 +48,29 @@ public class EnemySpawner : MonoBehaviour
         if (enemyTypeIndex < 0 || enemyTypeIndex >= enemyPrefabs.Length) return; // Validate index
 
         GameObject prefabToSpawn = enemyPrefabs[enemyTypeIndex];
-        Instantiate(prefabToSpawn, LevelManager.main.GetSelectedStartPoint().position, Quaternion.identity);
-        enemiesAlive++; // Increment the count of alive enemies
+
+        // Get the EnemyStats component from the prefab
+        EnemyStats enemyStats = prefabToSpawn.GetComponent<EnemyStats>();
+        if (enemyStats == null)
+        {
+            Debug.LogError("EnemyStats component missing on prefab: " + prefabToSpawn.name);
+            return;
+        }
+
+        // Check if there is enough attacker currency
+        if (LevelManager.main.attackerCurrency >= enemyStats.cost)
+        {
+            // Deduct the cost from attacker currency
+            LevelManager.main.attackerCurrency -= enemyStats.cost;
+
+            // Instantiate the enemy
+            Instantiate(prefabToSpawn, LevelManager.main.GetSelectedStartPoint().position, Quaternion.identity);
+            enemiesAlive++; // Increment the count of alive enemies
+        }
+        else
+        {
+            Debug.Log("Not enough currency to spawn enemy type " + (enemyTypeIndex + 1));
+        }
     }
+
 }

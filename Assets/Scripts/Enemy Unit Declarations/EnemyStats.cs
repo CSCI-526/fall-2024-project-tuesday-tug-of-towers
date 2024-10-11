@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class EnemyStats : MonoBehaviour
 {
     [Header("Attributes")]
     [SerializeField] private int hitPoints = 2; //2 points to hit before it gets destroyed
     [SerializeField] private int currencyWorth = 50;
-    [SerializeField] private int cost = 50;
+    [SerializeField] public int cost = 50;
 
     private bool isDestroyed = false;
 
