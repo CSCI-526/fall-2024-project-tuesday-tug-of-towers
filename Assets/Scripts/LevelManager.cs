@@ -42,18 +42,18 @@ public class LevelManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.A))
         {
-            SetStartPoint(1);  
-            Debug.Log("Path 1 selected.");
+            SetStartPoint(3);
+            Debug.Log("Path 3 selected.");
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            SetStartPoint(2);  
+            SetStartPoint(2);
             Debug.Log("Path 2 selected.");
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
-            SetStartPoint(3);  // User pressed 'D', choose start point 3 and path 3
-            Debug.Log("Path 3 selected.");
+            SetStartPoint(1);
+            Debug.Log("Path 1 selected.");
         }
     }
 
