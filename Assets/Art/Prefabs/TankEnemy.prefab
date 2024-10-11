@@ -178,3 +178,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoints: 4
   currencyWorth: 100
+  cost: 50
