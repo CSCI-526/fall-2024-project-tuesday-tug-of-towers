@@ -8,7 +8,7 @@ public interface Info { }
 
 public class SystemInfo : Info
 {
-    public string currentTimeString = "00:10:11";
+    public string currentTimeString = "00:10:10";
     public int pause = 0; // 0 means continue, 1 means pause
     public string pauseShow = "Paused";
 
@@ -16,8 +16,8 @@ public class SystemInfo : Info
 
 public class ResourcesInfo : Info
 {
-    public int attackMoney = 0;
-    public int defenseMoney = 0;
+    public int attackMoney = 100;
+    public int defenseMoney = 100;
     public int defenseLife = 100;
 }
 
