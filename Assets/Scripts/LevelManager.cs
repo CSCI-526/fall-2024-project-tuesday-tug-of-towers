@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LevelManager : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class LevelManager : MonoBehaviour
     private Transform selectedStartPoint;  
     private Transform[] selectedPath;      
 
-    public int currency;
+    public int defenderCurrency;
+    public int attackerCurrency;
 
     private void Awake()
     {
@@ -28,7 +30,8 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        currency = 100;
+        defenderCurrency = 100;
+        attackerCurrency = 100;
 
         // Set a default start point and path
         SetStartPoint(1); // Default to path 1
@@ -86,16 +89,22 @@ public class LevelManager : MonoBehaviour
         return selectedPath;
     }
 
+    public void DecreaseAttackerCurrency(int amount)
+    {
+        attackerCurrency -= amount;
+        Debug.Log("new attacker currency is " + attackerCurrency);
+    }
+
     public void IncreaseCurrency(int amount)
     {
-        currency += amount;
+        defenderCurrency += amount;
     }
 
     public bool SpendCurrency(int amount)
     {
-        if (amount <= currency)
+        if (amount <= defenderCurrency)
         {
-            currency -= amount;
+            defenderCurrency -= amount;
             return true;
         }
         else

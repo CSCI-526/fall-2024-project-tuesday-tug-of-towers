@@ -34,7 +34,7 @@ public class Plot : MonoBehaviour
 
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
 
-        if(towerToBuild.cost> LevelManager.main.currency)
+        if(towerToBuild.cost> LevelManager.main.defenderCurrency)
         {
             Debug.Log("Can't afford this");
             return;

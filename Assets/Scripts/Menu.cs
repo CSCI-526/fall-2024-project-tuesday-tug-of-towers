@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class Menu : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] TextMeshProUGUI currencyUI;
+    [SerializeField] TextMeshProUGUI defenderCurrencyUI;
+    [SerializeField] TextMeshProUGUI attackerCurrencyUI;
 
 
     private void OnGUI()
     {
-        currencyUI.text = LevelManager.main.currency.ToString();
+        defenderCurrencyUI.text = LevelManager.main.defenderCurrency.ToString();
+        attackerCurrencyUI.text = LevelManager.main.attackerCurrency.ToString();
     }
 
     public void SetSelected()
