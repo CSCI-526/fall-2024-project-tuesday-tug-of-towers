@@ -30,8 +30,8 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        defenderCurrency = 100;
-        attackerCurrency = 100;
+        defenderCurrency = 10000;
+        attackerCurrency = 10000;
 
         // Set a default start point and path
         SetStartPoint(1); // Default to path 1
