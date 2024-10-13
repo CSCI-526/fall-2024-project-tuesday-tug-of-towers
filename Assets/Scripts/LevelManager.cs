@@ -23,6 +23,8 @@ public class LevelManager : MonoBehaviour
     public int defenderCurrency;
     public int attackerCurrency;
 
+    private GameVariables gameVariables;
+
     private void Awake()
     {
         main = this;
@@ -30,8 +32,10 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        defenderCurrency = 100;
-        attackerCurrency = 100;
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
+        Debug.Log(gameVariables.resourcesInfo.defenseLife);
+        defenderCurrency = gameVariables.resourcesInfo.defenseMoney;
+        attackerCurrency = gameVariables.resourcesInfo.attackMoney;
 
         // Set a default start point and path
         SetStartPoint(1); // Default to path 1
@@ -92,12 +96,14 @@ public class LevelManager : MonoBehaviour
     public void DecreaseAttackerCurrency(int amount)
     {
         attackerCurrency -= amount;
+        gameVariables.resourcesInfo.attackMoney = attackerCurrency;
         Debug.Log("new attacker currency is " + attackerCurrency);
     }
 
     public void IncreaseCurrency(int amount)
     {
         defenderCurrency += amount;
+        gameVariables.resourcesInfo.defenseMoney = defenderCurrency;
     }
 
     public bool SpendCurrency(int amount)
@@ -105,6 +111,7 @@ public class LevelManager : MonoBehaviour
         if (amount <= defenderCurrency)
         {
             defenderCurrency -= amount;
+            gameVariables.resourcesInfo.defenseMoney = defenderCurrency;
             return true;
         }
         else
