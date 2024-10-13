@@ -6,8 +6,6 @@ using UnityEngine.Serialization;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager main;
-    //public GoogleFormSubmit formSubmitter;
-
 
     [Header("Start Points and Paths")]
     public Transform startPoint1;  
@@ -41,13 +39,6 @@ public class LevelManager : MonoBehaviour
 
         // Set a default start point and path
         SetStartPoint(1); // Default to path 1
-        //string sessionId = "Session123";
-        //string winner = "Attacker";  // Options: "Attacker" or "Defender"
-        //int numAttackers = 25;
-        //int numTurrets = 10;
-
-        //// Submit the data to Google Form
-        //formSubmitter.OnGameEnd(sessionId, winner, numAttackers, numTurrets);
     }
 
     private void Update()
