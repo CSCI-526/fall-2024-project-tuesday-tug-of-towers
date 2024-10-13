@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement; // Added for scene management
 
 public class TimeSystem : MonoBehaviour
 {
@@ -16,7 +16,6 @@ public class TimeSystem : MonoBehaviour
     private int initialHours;
     private int initialMinutes;
     private int initialSeconds;
-
 
     public void Init()
     {
@@ -67,6 +66,8 @@ public class TimeSystem : MonoBehaviour
             {
                 isCountingDown = false;
                 Debug.Log("Countdown end");
+                // Load the DefenderWin scene when time reaches 0
+                SceneManager.LoadScene("DefenderWin"); // Added line to load the DefenderWin scene
             }
         }
     }
