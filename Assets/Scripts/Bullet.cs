@@ -5,15 +5,15 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] protected Rigidbody2D rb;
 
 
     [Header("Attributes")]
-    [SerializeField] private float bulletSpeed = 5f;
-    [SerializeField] private int bulletDamage = 1;
+    [SerializeField] protected float bulletSpeed = 5f;
+    [SerializeField] protected int bulletDamage = 1;
 
 
-    private Transform target;
+    protected Transform target;
 
     public void SetTarget(Transform _target)
     {
