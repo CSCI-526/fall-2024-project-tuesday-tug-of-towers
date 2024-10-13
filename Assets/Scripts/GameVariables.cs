@@ -18,7 +18,7 @@ public class ResourcesInfo : Info
 {
     public int attackMoney = 100;
     public int defenseMoney = 100;
-    public int defenseLife = 100;
+    public int defenseLife = 10;
 }
 
 public class StatisticsInfo : Info
