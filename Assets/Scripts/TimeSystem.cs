@@ -6,22 +6,26 @@ using UnityEngine.SceneManagement; // Added for scene management
 
 public class TimeSystem : MonoBehaviour
 {
-    public float countdownRate = 1f;
-    public int attackMoneyIncreasePeriod = 10;
+    public float countdownRate = 0.5f;
+    public int attackMoneyIncreasePeriod = 1;
 
     private GameVariables gameVariables;
     private Calculation calculation;
-
+    public GoogleFormSubmit googleFormSubmit;
     private TimeSpan remainingTime;
     private bool isCountingDown = true;
     private int initialHours;
     private int initialMinutes;
     private int initialSeconds;
+    private EnemySpawner spawner;
+    int turretsPlaced;
 
     public void Init()
     {
         gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
         calculation = GetComponent<Calculation>();
+        spawner = FindObjectOfType<EnemySpawner>();
+        turretsPlaced = Plot.numberOfTurretsPlaced;
         string[] timeParts = gameVariables.systemInfo.currentTimeString.Split(':');
         if (timeParts.Length == 3)
         {
@@ -68,6 +72,23 @@ public class TimeSystem : MonoBehaviour
                 isCountingDown = false;
                 Debug.Log("Countdown end");
                 // Load the DefenderWin scene when time reaches 0
+                turretsPlaced = Plot.numberOfTurretsPlaced;
+                String SessionID = DateTime.UtcNow.Ticks.ToString();
+                if (googleFormSubmit != null)
+                {
+                    // Example data to send
+                    string sessionId = SessionID;
+                    string winner = "Defender";
+                    int numAttackers = spawner.numberOfEnemiesSpawned;
+                    int numTurrets = turretsPlaced;
+
+                    // Call the SubmitData function
+                    googleFormSubmit.SubmitData(sessionId, winner, numAttackers, numTurrets);
+                }
+                else
+                {
+                    Debug.LogError("GoogleFormSubmit component not assigned!");
+                }
                 SceneManager.LoadScene("DefenderWin"); // Added line to load the DefenderWin scene
             }
         }

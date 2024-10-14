@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Calculation : MonoBehaviour
 {
-    public int attackMoneyRate = 50;
+    public int attackMoneyRate = 200;
     private GameVariables gameVariables;
 
     private void Start()

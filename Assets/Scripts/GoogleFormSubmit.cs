@@ -1,36 +1,25 @@
 
-using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine;
 using System.Collections;
 
 public class GoogleFormSubmit : MonoBehaviour
 {
-    // Replace <form_id> with your Google Form's ID
     private string formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdQe96I6vwuUjWrW77nIZjvqpjlDf3ZkI5GtlnVV9qxmVMqfw/formResponse";
 
-    // Use Start() to send data when the game starts
-    private void Start()
+    // Make the method public so it can be accessed from another script
+    public void SubmitData(string sessionId, string winner, int numAttackers, int numTurrets)
     {
-        // Example data to send
-        string sessionId = "Session123";
-        string winner = "Attacker";
-        int numAttackers = 10;
-        int numTurrets = 5;
-
-        // Trigger the form submission
         StartCoroutine(PostToGoogleForm(sessionId, winner, numAttackers, numTurrets));
     }
 
-    // Coroutine to send data to the Google Form
     private IEnumerator PostToGoogleForm(string sessionId, string winner, int numAttackers, int numTurrets)
     {
         WWWForm form = new WWWForm();
-
-        // Add fields to the form. Ensure IDs match your form's entry IDs.
-        form.AddField("entry.2040210924", sessionId);             // Session ID
-        form.AddField("entry.1013643412", winner);                // Winner (Attacker/Defender)
-        form.AddField("entry.1003807920", numAttackers.ToString()); // Number of attackers spawned
-        form.AddField("entry.209927190", numTurrets.ToString());   // Number of turrets placed
+        form.AddField("entry.2040210924", sessionId);
+        form.AddField("entry.1013643412", winner);
+        form.AddField("entry.1003807920", numAttackers.ToString());
+        form.AddField("entry.209927190", numTurrets.ToString());
 
         using (UnityWebRequest www = UnityWebRequest.Post(formURL, form))
         {
@@ -61,6 +50,6 @@ public class GoogleFormSubmit : MonoBehaviour
 
 //    private IEnumerator PostToGoogleForm(string sessionId, string winner, int numAttackers, int numTurrets)
 //    {
-        
+
 //    }
 //}

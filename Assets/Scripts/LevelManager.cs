@@ -30,6 +30,11 @@ public class LevelManager : MonoBehaviour
     private int previousDefenseMoney;
     private int previousAttackMoney;
 
+    [Header("Key GameObjects")]
+    public GameObject aKeyObject;
+    public GameObject sKeyObject;
+    public GameObject dKeyObject;
+
     private void Awake()
     {
         main = this;
@@ -43,16 +48,10 @@ public class LevelManager : MonoBehaviour
 
         previousDefenseMoney = defenderCurrency;
         previousAttackMoney = attackerCurrency;
-
-        // Set a default start point and path
+        DisableAllKeys();
+        EnableOnlyThisKey(dKeyObject);
         SetStartPoint(1); // Default to path 1
-        //string sessionId = "Session123";
-        //string winner = "Attacker";  // Options: "Attacker" or "Defender"
-        //int numAttackers = 25;
-        //int numTurrets = 10;
-
-        //// Submit the data to Google Form
-        //formSubmitter.OnGameEnd(sessionId, winner, numAttackers, numTurrets);
+        
     }
 
     private void Update()
@@ -63,16 +62,20 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             SetStartPoint(3);
+            EnableOnlyThisKey(aKeyObject);
+
             Debug.Log("Path 3 selected.");
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
             SetStartPoint(2);
+            EnableOnlyThisKey(sKeyObject);
             Debug.Log("Path 2 selected.");
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             SetStartPoint(1);
+            EnableOnlyThisKey(dKeyObject);
             Debug.Log("Path 1 selected.");
         }
     }
@@ -134,7 +137,11 @@ public class LevelManager : MonoBehaviour
     public void IncreaseCurrency(int amount)
     {
         defenderCurrency += amount;
-        gameVariables.resourcesInfo.defenseMoney = defenderCurrency;
+        if(defenderCurrency < 301)
+        {
+            gameVariables.resourcesInfo.defenseMoney = defenderCurrency;
+        }
+        
     }
 
     public bool SpendCurrency(int amount)
@@ -150,6 +157,17 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Not enough currency!");
             return false;
         }
+    }
+    private void EnableOnlyThisKey(GameObject keyObject)
+    {
+        DisableAllKeys(); // Disable all keys first
+        keyObject.SetActive(true); // Enable the specific key object
+    }
+    private void DisableAllKeys()
+    {
+        aKeyObject.SetActive(false);
+        sKeyObject.SetActive(false);
+        dKeyObject.SetActive(false);
     }
 }
 

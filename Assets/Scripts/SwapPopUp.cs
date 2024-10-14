@@ -8,8 +8,23 @@ public class PopupManager : MonoBehaviour
 
     private void Start()
     {
-        swapPopUp.SetActive(false);
-        Invoke("TriggerRandomPopup", Random.Range(10, 30));
+        TryTriggerPopupWithProbability(0.7f); 
+    }
+    private void TryTriggerPopupWithProbability(float probability)
+    {
+        float randomValue = Random.value; 
+        Debug.Log("Random Value: " + randomValue);
+
+        if (randomValue <= probability) 
+        {
+            swapPopUp.SetActive(false);
+            Invoke("TriggerRandomPopup", Random.Range(10, 30));
+            Debug.Log("Popup triggered!");
+        }
+        else
+        {
+            Debug.Log("Popup not triggered.");
+        }
     }
 
     private void TriggerRandomPopup()
@@ -28,6 +43,6 @@ public class PopupManager : MonoBehaviour
         Time.timeScale = 1;
         isPaused = false;
 
-        Invoke("TriggerRandomPopup", Random.Range(10, 30));
+        //Invoke("TriggerRandomPopup", Random.Range(10, 30));
     }
 }

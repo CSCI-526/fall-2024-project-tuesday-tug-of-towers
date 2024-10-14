@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
 
     private int enemiesAlive = 0; // Track the number of alive enemies
     private GameVariables gameVariables;
+    public int numberOfEnemiesSpawned = 0;
 
     private void Awake()
     {
@@ -68,6 +69,7 @@ public class EnemySpawner : MonoBehaviour
             // Instantiate the enemy
             Instantiate(prefabToSpawn, LevelManager.main.GetSelectedStartPoint().position, Quaternion.identity);
             enemiesAlive++; // Increment the count of alive enemies
+            numberOfEnemiesSpawned++;
         }
         else
         {

@@ -9,7 +9,7 @@ public class TurretSlowmo : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
 
     [Header("Attribute")]
-    [SerializeField] private float targetingRange = 5f;
+    [SerializeField] private float targetingRange = 3f;
     [SerializeField] private float aps = 4f;
     [SerializeField] private float freezeTime = 1f;
     [SerializeField] private GameObject bulletPrefab;

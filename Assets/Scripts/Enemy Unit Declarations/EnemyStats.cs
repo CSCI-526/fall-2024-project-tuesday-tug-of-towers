@@ -5,13 +5,13 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour
 {
     [Header("Attributes")]
-    [SerializeField] private int hitPoints = 2; //2 points to hit before it gets destroyed
+    [SerializeField] private float hitPoints = 10; //2 points to hit before it gets destroyed
     [SerializeField] private int currencyWorth = 50;
-    [SerializeField] public int cost = 50;
+    [SerializeField] public int cost = 20;
 
     private bool isDestroyed = false;
 
-    public void TakeDamage(int dmg)
+    public void TakeDamage(float dmg)
     {
         hitPoints -= dmg;
 

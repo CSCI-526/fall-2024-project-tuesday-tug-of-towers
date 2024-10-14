@@ -10,6 +10,7 @@ public class Plot : MonoBehaviour
 
     private GameObject tower;
     private Color startColor;
+    public static int numberOfTurretsPlaced = 0;
 
     private void Start()
     {
@@ -39,9 +40,12 @@ public class Plot : MonoBehaviour
             Debug.Log("Can't afford this");
             return;
         }
+        numberOfTurretsPlaced++;
+        Debug.Log(numberOfTurretsPlaced);
         LevelManager.main.SpendCurrency(towerToBuild.cost);
 
         tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
+        
 
     }
 }
