@@ -12,19 +12,24 @@ public class TurretSlowmo : MonoBehaviour
     [SerializeField] private float targetingRange = 5f;
     [SerializeField] private float aps = 4f;
     [SerializeField] private float freezeTime = 1f;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float rotationSpeed = 100f;
 
     private float timeUntilFire;
 
     private void Update()
     {
-            timeUntilFire += Time.deltaTime;
+        transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+
+        timeUntilFire += Time.deltaTime;
 
             if (timeUntilFire >= 1f / aps)
             {
+                GameObject iceRing = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
                 FreezeEnemies();
                 timeUntilFire = 0f;
             }
-        }
+    }
 
     private void FreezeEnemies()
     {

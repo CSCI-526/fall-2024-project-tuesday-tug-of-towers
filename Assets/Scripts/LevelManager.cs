@@ -6,6 +6,8 @@ using UnityEngine.Serialization;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager main;
+    //public GoogleFormSubmit formSubmitter;
+
 
     [Header("Start Points and Paths")]
     public Transform startPoint1;  
@@ -25,6 +27,9 @@ public class LevelManager : MonoBehaviour
 
     private GameVariables gameVariables;
 
+    private int previousDefenseMoney;
+    private int previousAttackMoney;
+
     private void Awake()
     {
         main = this;
@@ -33,17 +38,28 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
-        Debug.Log(gameVariables.resourcesInfo.defenseLife);
         defenderCurrency = gameVariables.resourcesInfo.defenseMoney;
         attackerCurrency = gameVariables.resourcesInfo.attackMoney;
 
+        previousDefenseMoney = defenderCurrency;
+        previousAttackMoney = attackerCurrency;
+
         // Set a default start point and path
         SetStartPoint(1); // Default to path 1
+        //string sessionId = "Session123";
+        //string winner = "Attacker";  // Options: "Attacker" or "Defender"
+        //int numAttackers = 25;
+        //int numTurrets = 10;
+
+        //// Submit the data to Google Form
+        //formSubmitter.OnGameEnd(sessionId, winner, numAttackers, numTurrets);
     }
 
     private void Update()
     {
-        
+
+        CheckCurrencyChanges();
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             SetStartPoint(3);
@@ -61,7 +77,22 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    
+    private void CheckCurrencyChanges()
+    {
+        if (gameVariables.resourcesInfo.defenseMoney != previousDefenseMoney)
+        {
+            defenderCurrency = gameVariables.resourcesInfo.defenseMoney;
+            previousDefenseMoney = defenderCurrency;
+        }
+
+        if (gameVariables.resourcesInfo.attackMoney != previousAttackMoney)
+        {
+            attackerCurrency = gameVariables.resourcesInfo.attackMoney;
+            previousAttackMoney = attackerCurrency;
+        }
+    }
+
+
     public void SetStartPoint(int point)
     {
         if (point == 1)

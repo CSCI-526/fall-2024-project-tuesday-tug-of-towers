@@ -16,6 +16,7 @@ public class EnemyMovement : MonoBehaviour
 
     private float baseSpeed;
     private Transform[] currentPath;  // Store the current path
+    private GameVariables gameVariables;
 
     // Static variable to count how many enemies have reached the end of the path
     private static int enemiesReachedEnd = 0;
@@ -27,6 +28,7 @@ public class EnemyMovement : MonoBehaviour
         // Get the currently selected path from LevelManager
         currentPath = LevelManager.main.GetSelectedPath();
         target = currentPath[pathIndex];
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
     }
 
     private void Update()
@@ -47,6 +49,7 @@ public class EnemyMovement : MonoBehaviour
 
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject); // Destroy the game object when reaching the end
+                DefenseLifeDecrease(1);
                 return;
             }
             else
@@ -54,6 +57,11 @@ public class EnemyMovement : MonoBehaviour
                 target = currentPath[pathIndex];
             }
         }
+    }
+
+    private void DefenseLifeDecrease(int point)
+    {
+        gameVariables.resourcesInfo.defenseLife -= point;
     }
 
     private void FixedUpdate()

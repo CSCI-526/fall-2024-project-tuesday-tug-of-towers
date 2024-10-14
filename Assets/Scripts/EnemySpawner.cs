@@ -15,10 +15,12 @@ public class EnemySpawner : MonoBehaviour
     public static UnityEvent onEnemyDestroy = new UnityEvent();
 
     private int enemiesAlive = 0; // Track the number of alive enemies
+    private GameVariables gameVariables;
 
     private void Awake()
     {
         onEnemyDestroy.AddListener(EnemyDestroyed);
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
     }
 
     private void Update()
@@ -58,10 +60,10 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // Check if there is enough attacker currency
-        if (LevelManager.main.attackerCurrency >= enemyStats.cost)
+        if (gameVariables.resourcesInfo.attackMoney >= enemyStats.cost)
         {
             // Deduct the cost from attacker currency
-            LevelManager.main.attackerCurrency -= enemyStats.cost;
+            gameVariables.resourcesInfo.attackMoney -= enemyStats.cost;
 
             // Instantiate the enemy
             Instantiate(prefabToSpawn, LevelManager.main.GetSelectedStartPoint().position, Quaternion.identity);
