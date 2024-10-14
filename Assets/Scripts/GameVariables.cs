@@ -8,7 +8,7 @@ public interface Info { }
 
 public class SystemInfo : Info
 {
-    public string currentTimeString = "00:10:10";
+    public string currentTimeString = "00:01:00";
     public int pause = 0; // 0 means continue, 1 means pause
     public string pauseShow = "Paused";
 

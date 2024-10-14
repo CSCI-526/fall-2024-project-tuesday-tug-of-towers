@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; // Added for scene management
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class EnemyMovement : MonoBehaviour
     private float baseSpeed;
     private Transform[] currentPath;  // Store the current path
     private GameVariables gameVariables;
+
+    // Static variable to count how many enemies have reached the end of the path
+    private static int enemiesReachedEnd = 0;
 
     private void Start()
     {
@@ -35,6 +39,14 @@ public class EnemyMovement : MonoBehaviour
 
             if (pathIndex == currentPath.Length)
             {
+                enemiesReachedEnd++; // Increment the count of enemies that reached the end
+
+                // Check if the count reaches 4 to load the AttackerWin scene
+                if (enemiesReachedEnd >= 4)
+                {
+                    SceneManager.LoadScene("AttackerWin"); // Load the AttackerWin scene
+                }
+
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject); // Destroy the game object when reaching the end
                 DefenseLifeDecrease(1);
@@ -68,4 +80,3 @@ public class EnemyMovement : MonoBehaviour
         moveSpeed = baseSpeed;
     }
 }
-
