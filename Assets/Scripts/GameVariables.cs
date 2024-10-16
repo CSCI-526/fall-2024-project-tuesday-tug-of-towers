@@ -23,7 +23,8 @@ public class ResourcesInfo : Info
 
 public class StatisticsInfo : Info
 {
-
+    public int attackMoneyRate = 90;
+    public float attackMoneyIncreasePeriod = 5f;
 }
 
 public class GameVariables : MonoBehaviour

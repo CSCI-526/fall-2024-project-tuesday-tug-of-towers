@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement; // Added for scene management
 
 public class TimeSystem : MonoBehaviour
 {
-    public float countdownRate = 0.5f;
-    public int attackMoneyIncreasePeriod = 1;
+    public float countdownRate = 1f;
 
     private GameVariables gameVariables;
     private Calculation calculation;
@@ -17,6 +16,7 @@ public class TimeSystem : MonoBehaviour
     private int initialHours;
     private int initialMinutes;
     private int initialSeconds;
+    private float attackMoneyIncreasePeriod;
     private EnemySpawner spawner;
     int turretsPlaced;
 
@@ -46,12 +46,13 @@ public class TimeSystem : MonoBehaviour
             Debug.LogError("Invalid time format in currentTimeString.");
         }
         remainingTime = new TimeSpan(initialHours, initialMinutes, initialSeconds);
+        attackMoneyIncreasePeriod = gameVariables.statisticsInfo.attackMoneyIncreasePeriod;
         StartCoroutine(CountdownTimer());
     }
 
     IEnumerator CountdownTimer()
     {
-        int elapsedTime = 0;
+        float elapsedTime = 0f;
         while (isCountingDown)
         {
             yield return new WaitUntil(() => gameVariables.systemInfo.pause == 0);
@@ -60,7 +61,7 @@ public class TimeSystem : MonoBehaviour
                 yield return new WaitForSeconds(countdownRate);
                 remainingTime = remainingTime.Subtract(new TimeSpan(0, 0, 1));
                 gameVariables.systemInfo.currentTimeString = remainingTime.ToString();
-                elapsedTime += 1;
+                elapsedTime += countdownRate;
                 if (elapsedTime >= attackMoneyIncreasePeriod)
                 {
                     calculation.ApplyAttackMoney();
