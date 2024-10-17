@@ -180,3 +180,4 @@ MonoBehaviour:
   hitPoints: 8.12
   currencyWorth: 75
   cost: 50
+  floatingTextPrefab: {fileID: 7893733070681802948, guid: c61a56a4e9e12024fbdd95289227a1f1, type: 3}

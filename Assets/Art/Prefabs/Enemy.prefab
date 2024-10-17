@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.51, y: 3.54, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -180,3 +180,4 @@ MonoBehaviour:
   hitPoints: 4.01
   currencyWorth: 50
   cost: 25
+  floatingTextPrefab: {fileID: 7893733070681802948, guid: c61a56a4e9e12024fbdd95289227a1f1, type: 3}
