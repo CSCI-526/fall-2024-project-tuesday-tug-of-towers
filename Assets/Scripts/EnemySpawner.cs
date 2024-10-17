@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject[] enemyPrefabs; // Prefabs for enemy types
+    [SerializeField] private PopUpManager popupManager;
 
     [Header("Attributes")]
     // [SerializeField] private float difficultyScalingFactor = 0.75f;
@@ -73,7 +74,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough currency to spawn enemy type " + (enemyTypeIndex + 1));
+            popupManager.ShowMessage("Not enough currency to spawn enemy type " + (enemyTypeIndex + 1));
         }
     }
 

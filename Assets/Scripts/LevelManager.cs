@@ -20,15 +20,9 @@ public class LevelManager : MonoBehaviour
     public Transform[] path3;      
 
     private Transform selectedStartPoint;  
-    private Transform[] selectedPath;      
-
-    public int defenderCurrency;
-    public int attackerCurrency;
+    private Transform[] selectedPath;   
 
     private GameVariables gameVariables;
-
-    private int previousDefenseMoney;
-    private int previousAttackMoney;
 
     [Header("Key GameObjects")]
     public GameObject aKeyObject;
@@ -43,11 +37,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
-        defenderCurrency = gameVariables.resourcesInfo.defenseMoney;
-        attackerCurrency = gameVariables.resourcesInfo.attackMoney;
 
-        previousDefenseMoney = defenderCurrency;
-        previousAttackMoney = attackerCurrency;
         DisableAllKeys();
         EnableOnlyThisKey(dKeyObject);
         SetStartPoint(1); // Default to path 1
@@ -56,8 +46,6 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-
-        CheckCurrencyChanges();
 
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -79,22 +67,6 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Path 1 selected.");
         }
     }
-
-    private void CheckCurrencyChanges()
-    {
-        if (gameVariables.resourcesInfo.defenseMoney != previousDefenseMoney)
-        {
-            defenderCurrency = gameVariables.resourcesInfo.defenseMoney;
-            previousDefenseMoney = defenderCurrency;
-        }
-
-        if (gameVariables.resourcesInfo.attackMoney != previousAttackMoney)
-        {
-            attackerCurrency = gameVariables.resourcesInfo.attackMoney;
-            previousAttackMoney = attackerCurrency;
-        }
-    }
-
 
     public void SetStartPoint(int point)
     {
@@ -129,27 +101,24 @@ public class LevelManager : MonoBehaviour
 
     public void DecreaseAttackerCurrency(int amount)
     {
-        attackerCurrency -= amount;
-        gameVariables.resourcesInfo.attackMoney = attackerCurrency;
-        Debug.Log("new attacker currency is " + attackerCurrency);
+        gameVariables.resourcesInfo.attackMoney -= amount;
+        Debug.Log("new attacker currency is " + gameVariables.resourcesInfo.attackMoney);
     }
 
     public void IncreaseCurrency(int amount)
     {
-        defenderCurrency += amount;
-        if(defenderCurrency < 301)
+        if (gameVariables.resourcesInfo.defenseMoney < 301)
         {
-            gameVariables.resourcesInfo.defenseMoney = defenderCurrency;
+            gameVariables.resourcesInfo.defenseMoney += amount;
         }
-        
+
     }
 
     public bool SpendCurrency(int amount)
     {
-        if (amount <= defenderCurrency)
+        if (amount <= gameVariables.resourcesInfo.defenseMoney)
         {
-            defenderCurrency -= amount;
-            gameVariables.resourcesInfo.defenseMoney = defenderCurrency;
+            gameVariables.resourcesInfo.defenseMoney -= amount;
             return true;
         }
         else
@@ -158,6 +127,7 @@ public class LevelManager : MonoBehaviour
             return false;
         }
     }
+
     private void EnableOnlyThisKey(GameObject keyObject)
     {
         DisableAllKeys(); // Disable all keys first
