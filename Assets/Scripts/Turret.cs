@@ -13,7 +13,7 @@ public class Turret : MonoBehaviour
 
 
     [Header("Attribute")]
-    [SerializeField] private float targetingRange = 3f;
+    [SerializeField] private float targetingRange = 0.1f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float bps = 0.5f;
 
@@ -55,15 +55,28 @@ public class Turret : MonoBehaviour
         bulletScript.SetTarget(target);
     }
 
+    // private void FindTarget()
+    // {
+    //     RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
+
+    //     if (hits.Length > 0)
+    //     {
+    //         target = hits[0].transform;
+    //     }
+    // }
+
     private void FindTarget()
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
+        // Perform a circle cast with the targeting range
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, targetingRange, Vector2.zero, 0f, enemyMask);
 
+        // Check if any enemies are within the circle cast
         if (hits.Length > 0)
         {
             target = hits[0].transform;
         }
     }
+
 
     private bool CheckTargetIsInRange()
     {

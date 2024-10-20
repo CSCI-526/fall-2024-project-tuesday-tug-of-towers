@@ -23,10 +23,13 @@ public class EnemyMovement : MonoBehaviour
     private GameVariables gameVariables;
 
     // Static variable to count how many enemies have reached the end of the path
-    private static int enemiesReachedEnd = 0;
+    private static int enemiesReachedEnd = 0; // Counts enemies that reach the end
 
     private void Start()
     {
+        // Reset enemiesReachedEnd at the start of a new game
+        enemiesReachedEnd = 0;
+
         baseSpeed = moveSpeed;
 
         // Get the currently selected path from LevelManager
@@ -35,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
 
         gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
         spawner = FindObjectOfType<EnemySpawner>();
-        
+
         GameObject managerObj = GameObject.Find("GoogleFormManager");
 
         if (managerObj != null)
@@ -52,7 +55,7 @@ public class EnemyMovement : MonoBehaviour
                 Debug.LogError("GoogleFormSubmit component not found on GoogleFormManager!");
             }
         }
-        
+
         else
         {
             Debug.LogError("GoogleFormManager GameObject not found!");
@@ -69,7 +72,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 enemiesReachedEnd++; // Increment the count of enemies that reached the end
 
-                // Check if the count reaches 4 to load the AttackerWin scene
+                // Check if the count reaches 10 to load the AttackerWin scene
                 if (enemiesReachedEnd >= 10)
                 {
                     turretsPlaced = Plot.numberOfTurretsPlaced;
