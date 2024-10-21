@@ -179,11 +179,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Controls (2 Player Game):\nAttacker: A, S, or D keys to select lanes\n              
-    1 and 2 keys to deploy different troops\n\nDefender: Use mouse to drag and drop
-    weapons to destroy incoming attacker troops\n\nWin Condition:\nAttacker wins
-    if 4 troops enter the castle.\nDefender wins if they survive until time runs
-    out."
+  m_text: 'This is a 2 player game, where the attacker plays against the defender.
+
+
+    Attacker
+    - Overwhelm your opponent by sending units to attack the orange castle!
+
+
+    Defender
+    - Build towers to kill the incoming enemy units and survive until the time runs
+    out!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -516,7 +521,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -10.841492, y: -6.5615845}
+  m_AnchoredPosition: {x: -10.841553, y: -6.5615845}
   m_SizeDelta: {x: 21.6829, y: 13.123}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1609737818
