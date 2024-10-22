@@ -6,6 +6,8 @@ using UnityEngine.Serialization;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager main;
+    //public GoogleFormSubmit formSubmitter;
+
 
     [Header("Start Points and Paths")]
     public Transform startPoint1;  
@@ -18,10 +20,14 @@ public class LevelManager : MonoBehaviour
     public Transform[] path3;      
 
     private Transform selectedStartPoint;  
-    private Transform[] selectedPath;      
+    private Transform[] selectedPath;   
 
-    public int defenderCurrency;
-    public int attackerCurrency;
+    private GameVariables gameVariables;
+
+    [Header("Key GameObjects")]
+    public GameObject aKeyObject;
+    public GameObject sKeyObject;
+    public GameObject dKeyObject;
 
     private void Awake()
     {
@@ -30,34 +36,38 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        defenderCurrency = 10000;
-        attackerCurrency = 10000;
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
 
-        // Set a default start point and path
+        DisableAllKeys();
+        EnableOnlyThisKey(dKeyObject);
         SetStartPoint(1); // Default to path 1
+        
     }
 
     private void Update()
     {
-        
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             SetStartPoint(3);
+            EnableOnlyThisKey(aKeyObject);
+
             Debug.Log("Path 3 selected.");
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
             SetStartPoint(2);
+            EnableOnlyThisKey(sKeyObject);
             Debug.Log("Path 2 selected.");
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             SetStartPoint(1);
+            EnableOnlyThisKey(dKeyObject);
             Debug.Log("Path 1 selected.");
         }
     }
 
-    
     public void SetStartPoint(int point)
     {
         if (point == 1)
@@ -91,20 +101,24 @@ public class LevelManager : MonoBehaviour
 
     public void DecreaseAttackerCurrency(int amount)
     {
-        attackerCurrency -= amount;
-        Debug.Log("new attacker currency is " + attackerCurrency);
+        gameVariables.resourcesInfo.attackMoney -= amount;
+        Debug.Log("new attacker currency is " + gameVariables.resourcesInfo.attackMoney);
     }
 
     public void IncreaseCurrency(int amount)
     {
-        defenderCurrency += amount;
+        if (gameVariables.resourcesInfo.defenseMoney < 301)
+        {
+            gameVariables.resourcesInfo.defenseMoney += amount;
+        }
+
     }
 
     public bool SpendCurrency(int amount)
     {
-        if (amount <= defenderCurrency)
+        if (amount <= gameVariables.resourcesInfo.defenseMoney)
         {
-            defenderCurrency -= amount;
+            gameVariables.resourcesInfo.defenseMoney -= amount;
             return true;
         }
         else
@@ -112,6 +126,18 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Not enough currency!");
             return false;
         }
+    }
+
+    private void EnableOnlyThisKey(GameObject keyObject)
+    {
+        DisableAllKeys(); // Disable all keys first
+        keyObject.SetActive(true); // Enable the specific key object
+    }
+    private void DisableAllKeys()
+    {
+        aKeyObject.SetActive(false);
+        sKeyObject.SetActive(false);
+        dKeyObject.SetActive(false);
     }
 }
 

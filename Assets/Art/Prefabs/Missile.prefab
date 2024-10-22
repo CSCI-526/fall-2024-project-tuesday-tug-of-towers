@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1877398489, guid: db348be440016bc44a5751c54e65e810, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5f5b0c53cce872440af9c88520b5f26d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,8 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 2307502548737951804}
   flameSprites:
-  - {fileID: 1877398489, guid: db348be440016bc44a5751c54e65e810, type: 3}
-  - {fileID: -623887852, guid: db348be440016bc44a5751c54e65e810, type: 3}
+  - {fileID: 21300000, guid: 5f5b0c53cce872440af9c88520b5f26d, type: 3}
+  - {fileID: 21300000, guid: d2022240fa7ce7f4993b3ed2df04728f, type: 3}
   frameDuration: 0.1
 --- !u!1 &5936265668883483305
 GameObject:
@@ -290,7 +290,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1750717061, guid: db348be440016bc44a5751c54e65e810, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 663723348b9cedf4ab3d409778bbe7c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

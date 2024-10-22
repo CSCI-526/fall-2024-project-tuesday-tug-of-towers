@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject[] enemyPrefabs; // Prefabs for enemy types
+    [SerializeField] private PopUpManager popupManager;
 
     [Header("Attributes")]
     // [SerializeField] private float difficultyScalingFactor = 0.75f;
@@ -15,10 +16,13 @@ public class EnemySpawner : MonoBehaviour
     public static UnityEvent onEnemyDestroy = new UnityEvent();
 
     private int enemiesAlive = 0; // Track the number of alive enemies
+    private GameVariables gameVariables;
+    public int numberOfEnemiesSpawned = 0;
 
     private void Awake()
     {
         onEnemyDestroy.AddListener(EnemyDestroyed);
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
     }
 
     private void Update()
@@ -58,18 +62,19 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // Check if there is enough attacker currency
-        if (LevelManager.main.attackerCurrency >= enemyStats.cost)
+        if (gameVariables.resourcesInfo.attackMoney >= enemyStats.cost)
         {
             // Deduct the cost from attacker currency
-            LevelManager.main.attackerCurrency -= enemyStats.cost;
+            gameVariables.resourcesInfo.attackMoney -= enemyStats.cost;
 
             // Instantiate the enemy
             Instantiate(prefabToSpawn, LevelManager.main.GetSelectedStartPoint().position, Quaternion.identity);
             enemiesAlive++; // Increment the count of alive enemies
+            numberOfEnemiesSpawned++;
         }
         else
         {
-            Debug.Log("Not enough currency to spawn enemy type " + (enemyTypeIndex + 1));
+            popupManager.ShowMessage("Not enough currency to spawn enemy type " + (enemyTypeIndex + 1));
         }
     }
 
