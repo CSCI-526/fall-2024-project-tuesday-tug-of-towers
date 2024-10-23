@@ -51,7 +51,10 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogError("GoogleFormManager GameObject not found!");
+            if(SceneManager.GetActiveScene().name == "Main")
+            {
+                Debug.LogError("GoogleFormManager GameObject not found!");
+            }
         }
     }
 
