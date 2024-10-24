@@ -7,10 +7,11 @@ using UnityEngine.SceneManagement; // Added for scene management
 public class TimeSystem : MonoBehaviour
 {
     public float countdownRate = 1f;
+    public GoogleFormSubmit googleFormSubmit;
+    [SerializeField] private PopUpManager CurrencyIncreasePupup;
 
     private GameVariables gameVariables;
     private Calculation calculation;
-    public GoogleFormSubmit googleFormSubmit;
     private TimeSpan remainingTime;
     private bool isCountingDown = true;
     private int initialHours;
@@ -65,6 +66,7 @@ public class TimeSystem : MonoBehaviour
                 if (elapsedTime >= attackMoneyIncreasePeriod)
                 {
                     calculation.ApplyAttackMoney();
+                    CurrencyIncreasePupup.ShowMessage("+" + (gameVariables.statisticsInfo.attackMoneyRate));
                     elapsedTime = 0;
                 }
             }

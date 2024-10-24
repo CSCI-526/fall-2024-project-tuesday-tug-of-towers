@@ -8,10 +8,12 @@ public class FloatingText : MonoBehaviour
     public float fadeDuration = 1f;
 
     private TMP_Text textComponent;
+    [SerializeField]
+    private Vector3 startPosition;
 
     public void SetWorldPosition(Vector3 worldPosition)
     {
-        transform.position = worldPosition;
+        startPosition = worldPosition;
     }
 
     public void SetText(string text)
@@ -37,12 +39,15 @@ public class FloatingText : MonoBehaviour
             Debug.LogError("TMP_Text component not found on FloatingText prefab.");
             return;
         }
+        textComponent.fontMaterial = new Material(textComponent.fontMaterial);
 
         Color originalColor = textComponent.color;
         textComponent.color = new Color(originalColor.r, originalColor.g, originalColor.b, 1f);
+        transform.position = startPosition;
 
-        StartCoroutine(FadeAndMove());  
+        StartCoroutine(FadeAndMove());
     }
+
 
     IEnumerator FadeAndMove()
     {
