@@ -22,14 +22,8 @@ public class EnemyMovement : MonoBehaviour
     private Transform[] currentPath;  // Store the current path
     private GameVariables gameVariables;
 
-    // Static variable to count how many enemies have reached the end of the path
-    private static int enemiesReachedEnd = 0; // Counts enemies that reach the end
-
     private void Start()
     {
-        // Reset enemiesReachedEnd at the start of a new game
-        enemiesReachedEnd = 0;
-
         baseSpeed = moveSpeed;
 
         // Get the currently selected path from LevelManager
@@ -55,10 +49,12 @@ public class EnemyMovement : MonoBehaviour
                 Debug.LogError("GoogleFormSubmit component not found on GoogleFormManager!");
             }
         }
-
         else
         {
-            Debug.LogError("GoogleFormManager GameObject not found!");
+            if(SceneManager.GetActiveScene().name == "Main")
+            {
+                Debug.LogError("GoogleFormManager GameObject not found!");
+            }
         }
     }
 
@@ -70,35 +66,34 @@ public class EnemyMovement : MonoBehaviour
 
             if (pathIndex == currentPath.Length)
             {
-                enemiesReachedEnd++; // Increment the count of enemies that reached the end
+                // Enemy reached the end of the path
+                DefenseLifeDecrease(1);
 
-                // Check if the count reaches 10 to load the AttackerWin scene
-                if (enemiesReachedEnd >= 10)
+                // Check if defense life has reached zero
+                if (gameVariables.resourcesInfo.defenseLife <= 0)
                 {
                     turretsPlaced = Plot.numberOfTurretsPlaced;
-                    String SessionID = DateTime.UtcNow.Ticks.ToString();
+                    string sessionId = DateTime.UtcNow.Ticks.ToString();
+
                     if (googleFormSubmit != null)
                     {
-                        // Example data to send
-                        string sessionId = SessionID;
+                        // Submit data
                         string winner = "Attacker";
                         int numAttackers = spawner.numberOfEnemiesSpawned;
                         int numTurrets = turretsPlaced;
 
-                        // Call the SubmitData function
                         googleFormSubmit.SubmitData(sessionId, winner, numAttackers, numTurrets);
                     }
                     else
                     {
                         Debug.LogError("GoogleFormSubmit component not assigned!");
                     }
+
                     SceneManager.LoadScene("AttackerWin"); // Load the AttackerWin scene
                 }
 
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject); // Destroy the game object when reaching the end
-                DefenseLifeDecrease(1);
-                return;
             }
             else
             {

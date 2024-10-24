@@ -8,13 +8,16 @@ public class BuildManager : MonoBehaviour
 
     [Header("References")]
     //[SerializeField] private GameObject[] towerPrefabs;
-    [SerializeField] private Tower[] towers;
+    public Tower[] towers;
+    [SerializeField] private PopUpManager popupManager;
+    private GameVariables gameVariables;
 
     private int selectedTower = 0;
 
     private void Awake()
     {
         main = this;
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
     }
 
     public Tower GetSelectedTower()
@@ -24,6 +27,13 @@ public class BuildManager : MonoBehaviour
 
     public void SetSelectedTower(int _selectedTower)
     {
-        selectedTower = _selectedTower;
+        if (towers[_selectedTower].cost <= gameVariables.resourcesInfo.defenseMoney)
+        {
+            selectedTower = _selectedTower;
+        }
+        else
+        {
+            popupManager.ShowMessage("Not enough currency to spawn " + (towers[_selectedTower].name));
+        }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -32,39 +33,43 @@ public class LevelManager : MonoBehaviour
     private void Awake()
     {
         main = this;
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
     }
 
     private void Start()
     {
-        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
-
-        DisableAllKeys();
-        EnableOnlyThisKey(dKeyObject);
         SetStartPoint(1); // Default to path 1
+        if (SceneManager.GetActiveScene().name == "Main")
+        {
+            DisableAllKeys();
+            EnableOnlyThisKey(dKeyObject);
+        }
         
     }
 
     private void Update()
     {
+        if (SceneManager.GetActiveScene().name == "Main")
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                SetStartPoint(3);
+                EnableOnlyThisKey(aKeyObject);
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetStartPoint(3);
-            EnableOnlyThisKey(aKeyObject);
-
-            Debug.Log("Path 3 selected.");
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            SetStartPoint(2);
-            EnableOnlyThisKey(sKeyObject);
-            Debug.Log("Path 2 selected.");
-        }
-        else if (Input.GetKeyDown(KeyCode.D))
-        {
-            SetStartPoint(1);
-            EnableOnlyThisKey(dKeyObject);
-            Debug.Log("Path 1 selected.");
+                Debug.Log("Path 3 selected.");
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                SetStartPoint(2);
+                EnableOnlyThisKey(sKeyObject);
+                Debug.Log("Path 2 selected.");
+            }
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
+                SetStartPoint(1);
+                EnableOnlyThisKey(dKeyObject);
+                Debug.Log("Path 1 selected.");
+            }
         }
     }
 

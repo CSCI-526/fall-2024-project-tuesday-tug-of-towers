@@ -12,14 +12,11 @@ public class Plot : MonoBehaviour
     private Color startColor;
     public static int numberOfTurretsPlaced = 0;
     private GameVariables gameVariables;
-    private PopUpManager popupManager;
 
     private void Start()
     {
         startColor = sr.color;
         gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
-        GameObject defenderPopupMessage = GameObject.Find("DefenderPopupMessage");
-        popupManager = defenderPopupMessage.GetComponent<PopUpManager>();
     }
 
     private void OnMouseEnter()
@@ -42,7 +39,6 @@ public class Plot : MonoBehaviour
 
         if(towerToBuild.cost > gameVariables.resourcesInfo.defenseMoney)
         {
-            popupManager.ShowMessage("Not enough currency for defender to build tower");
             Debug.Log("Can't afford this");
             return;
         }
