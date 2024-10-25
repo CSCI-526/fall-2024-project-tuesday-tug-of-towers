@@ -137,12 +137,12 @@ SpriteRenderer:
   m_SortingLayerID: 504160783
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 855922808, guid: db348be440016bc44a5751c54e65e810, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 360a7a9a1888cb748a0686c8dc045aab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.8828125, y: 1}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -221,12 +221,12 @@ SpriteRenderer:
   m_SortingLayerID: 504160783
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 483629376, guid: db348be440016bc44a5751c54e65e810, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 328a0154474e4ef4e8c768e8bf16c5c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -284,6 +284,6 @@ MonoBehaviour:
     m_Bits: 64
   bulletPrefab: {fileID: 5936265668883483305, guid: c2d39a594c15b634cac62398157cd89a, type: 3}
   firingPoint: {fileID: 4229060381260849976}
-  targetingRange: 14
+  targetingRange: 4.2
   rotationSpeed: 100
   bps: 1

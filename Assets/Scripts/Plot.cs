@@ -33,9 +33,10 @@ public class Plot : MonoBehaviour
     {
         if (tower != null) return;
 
-
-
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
+
+        if (towerToBuild == null)
+            return;
 
         if(towerToBuild.cost > gameVariables.resourcesInfo.defenseMoney)
         {
@@ -47,7 +48,6 @@ public class Plot : MonoBehaviour
         LevelManager.main.SpendCurrency(towerToBuild.cost);
 
         tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
-        
-
+        BuildManager.main.placedTowerCount++;
     }
 }

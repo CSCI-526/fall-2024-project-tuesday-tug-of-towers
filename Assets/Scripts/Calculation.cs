@@ -16,6 +16,6 @@ public class Calculation : MonoBehaviour
 
 
         if (gameVariables.resourcesInfo.attackMoney > ResourcesInfo.maxAttackMoney)
-            gameVariables.resourcesInfo.attackMoney = ResourcesInfo.maxAttackMoney; // 限制金币上限
+            gameVariables.resourcesInfo.attackMoney = ResourcesInfo.maxAttackMoney;
     }
 }

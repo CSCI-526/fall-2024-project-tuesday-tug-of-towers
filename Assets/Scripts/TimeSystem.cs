@@ -66,15 +66,10 @@ public class TimeSystem : MonoBehaviour
                 if (elapsedTime >= attackMoneyIncreasePeriod)
                 {
                     if (gameVariables.resourcesInfo.attackMoney + gameVariables.statisticsInfo.attackMoneyRate >= ResourcesInfo.maxAttackMoney)
-                    {
-                        int temp = ResourcesInfo.maxAttackMoney - gameVariables.resourcesInfo.attackMoney;
-                        Debug.Log(gameVariables.resourcesInfo.attackMoney + " @" + gameVariables.statisticsInfo.attackMoneyRate);
-                        CurrencyIncreasePupup.ShowMessage("+" + temp);
-                    }
+                        CurrencyIncreasePupup.ShowMessage("+" + (ResourcesInfo.maxAttackMoney - gameVariables.resourcesInfo.attackMoney));
                     else
-                    {
                         CurrencyIncreasePupup.ShowMessage("+" + (gameVariables.statisticsInfo.attackMoneyRate));
-                    }
+
                     calculation.ApplyAttackMoney();
                     elapsedTime = 0;
                 }

@@ -13,6 +13,7 @@ public class BuildManager : MonoBehaviour
     private GameVariables gameVariables;
 
     private int selectedTower = 0;
+    public int placedTowerCount = 0;
 
     private void Awake()
     {
@@ -22,14 +23,23 @@ public class BuildManager : MonoBehaviour
 
     public Tower GetSelectedTower()
     {
-        return towers[selectedTower];
+        if (placedTowerCount < 5)
+            return towers[selectedTower];
+        else return null;
     }
 
     public void SetSelectedTower(int _selectedTower)
     {
+        if(placedTowerCount == 5)
+        {
+            popupManager.ShowMessage("Defender has reached the limit");
+            return;
+        }
+
         if (towers[_selectedTower].cost <= gameVariables.resourcesInfo.defenseMoney)
         {
             selectedTower = _selectedTower;
+
         }
         else
         {
