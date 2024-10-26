@@ -9,6 +9,7 @@ public class Turret : MonoBehaviour
     [SerializeField] private Transform turretRotationPoint;
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject ringPrefab;
     [SerializeField] private Transform firingPoint;
 
 
@@ -16,10 +17,17 @@ public class Turret : MonoBehaviour
     [SerializeField] private float targetingRange = 0.1f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float bps = 0.5f;
+    [SerializeField] private float scaleFactor = 1.5f;
 
 
     private Transform target;
     private float timeUntilFire;
+
+    private void Awake()
+    {
+        GameObject iceRing = Instantiate(ringPrefab, transform.position, Quaternion.identity);
+        iceRing.transform.localScale *= scaleFactor;
+    }
 
     private void Update()
     {

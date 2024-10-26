@@ -283,7 +283,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   bulletPrefab: {fileID: 5936265668883483305, guid: c2d39a594c15b634cac62398157cd89a, type: 3}
+  ringPrefab: {fileID: 5936265668883483305, guid: 5090dd75470554746b72ee5d1fb4786f, type: 3}
   firingPoint: {fileID: 4229060381260849976}
   targetingRange: 4.2
   rotationSpeed: 100
   bps: 1
+  scaleFactor: 1.4
