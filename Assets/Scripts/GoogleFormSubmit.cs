@@ -54,19 +54,19 @@ public class GoogleFormSubmit : MonoBehaviour
     }
 }
 
-public class GoogleFormSubmit : MonoBehaviour
-{
-    // Replace <form_id> with your Google Form's ID
-    private string formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdQe96I6vwuUjWrW77nIZjvqpjlDf3ZkI5GtlnVV9qxmVMqfw/formResponse";
+//public class GoogleFormSubmit : MonoBehaviour
+//{
+//    // Replace <form_id> with your Google Form's ID
+//    private string formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdQe96I6vwuUjWrW77nIZjvqpjlDf3ZkI5GtlnVV9qxmVMqfw/formResponse";
 
-    // This method is called when the game ends
-    public void OnGameEnd(string sessionId, string winner, int numAttackers, int numTurrets)
-    {
-        StartCoroutine(PostToGoogleForm(sessionId, winner, numAttackers, numTurrets));
-    }
+//    // This method is called when the game ends
+//    public void OnGameEnd(string sessionId, string winner, int numAttackers, int numTurrets)
+//    {
+//        StartCoroutine(PostToGoogleForm(sessionId, winner, numAttackers, numTurrets));
+//    }
 
-    private IEnumerator PostToGoogleForm(string sessionId, string winner, int numAttackers, int numTurrets)
-    {
+//    private IEnumerator PostToGoogleForm(string sessionId, string winner, int numAttackers, int numTurrets)
+//    {
 
-    }
-}
+//    }
+//}
