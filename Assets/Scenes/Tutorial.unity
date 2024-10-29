@@ -2875,10 +2875,8 @@ MonoBehaviour:
   m_text: 'Attacker''s controls are keyboard based.
 
 
-    Choose Path: A / S / D
-
-    Send
-    Attacking Unit: 1 / 2'
+    Press 1 to send attacking
+    unit.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
