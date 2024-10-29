@@ -4,7 +4,7 @@ public class Missile : Bullet
 {
     [Header("Missile Attributes")]
     [SerializeField] private float rotationSpeed = 200f;
-    [SerializeField] private float acceleration = 1f;  // ���ٶ�
+    [SerializeField] private float acceleration = 1f;
 
     private float currentSpeed;
 

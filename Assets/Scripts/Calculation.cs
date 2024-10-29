@@ -13,5 +13,9 @@ public class Calculation : MonoBehaviour
     public void ApplyAttackMoney()
     {
         gameVariables.resourcesInfo.attackMoney += gameVariables.statisticsInfo.attackMoneyRate;
+
+
+        if (gameVariables.resourcesInfo.attackMoney > ResourcesInfo.maxAttackMoney)
+            gameVariables.resourcesInfo.attackMoney = ResourcesInfo.maxAttackMoney;
     }
 }
