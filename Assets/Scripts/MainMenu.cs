@@ -7,8 +7,11 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        // Load the next scene in build order
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
+        SceneManager.LoadScene(2);
+    }
+    
+    public void PlayTutorial()
+    {
+        SceneManager.LoadScene(1);
     }
 }
