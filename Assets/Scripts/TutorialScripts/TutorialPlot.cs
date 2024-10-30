@@ -102,7 +102,7 @@ public class TutorialPlot : MonoBehaviour
         TutorialLevelManager.main.tSpendCurrency(tTowerToBuild.tcost);
         tower = Instantiate(tTowerToBuild.perfabs, transform.position, Quaternion.identity);
 
-        FindObjectOfType<UIManager>().RemoveHighlights();
+        FindObjectOfType<TutorialUIManager>().RemoveHighlights();
     }
 
 

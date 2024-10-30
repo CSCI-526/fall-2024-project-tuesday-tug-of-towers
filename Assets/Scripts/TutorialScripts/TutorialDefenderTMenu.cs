@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class DefenderTMenu : MonoBehaviour
+public class TutorialDefenderTMenu : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] TextMeshProUGUI defenderCurrencyUI;

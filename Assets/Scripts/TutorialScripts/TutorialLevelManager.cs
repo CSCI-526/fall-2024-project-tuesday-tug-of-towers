@@ -15,7 +15,7 @@ public class TutorialLevelManager : MonoBehaviour
     public int tcurrency;
     public int totalCount;
 
-    private UIManager uiManager;
+    private TutorialUIManager tutorialUIManager;
 
     private void Awake()
     {
@@ -26,8 +26,8 @@ public class TutorialLevelManager : MonoBehaviour
     {
         tcurrency = 200;
         totalCount = 2;
-        uiManager = FindObjectOfType<UIManager>();
-        uiManager.UpdateTotalCount(totalCount);
+        tutorialUIManager = FindObjectOfType<TutorialUIManager>();
+        tutorialUIManager.UpdateTotalCount(totalCount);
     }
 
     public void IncreaseTutorialCurrency(int tamount)
@@ -41,18 +41,18 @@ public class TutorialLevelManager : MonoBehaviour
         {
             //buy item
             tcurrency -= tamount;
-            if (uiManager != null)
+            if (tutorialUIManager != null)
             {
-                uiManager.HideTurretImage();
+                tutorialUIManager.HideTurretImage();
             }
             totalCount--;
             if (totalCount <= 0)
             {
-                uiManager.DisableTowerButton(); 
+                tutorialUIManager.DisableTowerButton(); 
             }
-            if (uiManager != null)
+            if (tutorialUIManager != null)
             {
-                uiManager.UpdateTotalCount(totalCount); 
+                tutorialUIManager.UpdateTotalCount(totalCount); 
             }
             return true;
         }
@@ -70,9 +70,9 @@ public class TutorialLevelManager : MonoBehaviour
         {
             castleLife--;
         }
-        if (uiManager != null)
+        if (tutorialUIManager != null)
         {
-            uiManager.UpdateCastleLife(castleLife); 
+            tutorialUIManager.UpdateCastleLife(castleLife); 
         }
 
         

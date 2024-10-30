@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class TutorialUIManager : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI defenderTurnText; 
