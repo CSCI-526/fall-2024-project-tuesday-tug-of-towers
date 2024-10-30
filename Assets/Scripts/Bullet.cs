@@ -30,7 +30,24 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        other.gameObject.GetComponent<EnemyStats>().TakeDamage(bulletDamage);
+        /*other.gameObject.GetComponent<EnemyStats>().TakeDamage(bulletDamage);
+        Destroy(gameObject);*/
+        EnemyStats enemyStats = other.gameObject.GetComponent<EnemyStats>();
+        if (enemyStats != null)
+        {
+            enemyStats.TakeDamage(bulletDamage);
+        }
+        else
+        {
+            // Check for TutorialEnemyStats (Tutorial Level)
+            TutorialHealth tutorialEnemyStats = other.gameObject.GetComponent<TutorialHealth>();
+            if (tutorialEnemyStats != null)
+            {
+                tutorialEnemyStats.TakeDamage(bulletDamage);
+            }
+        }
+
+        // Destroy the bullet regardless of which component was hit
         Destroy(gameObject);
     }
 }

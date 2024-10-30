@@ -53,6 +53,26 @@ public class TimeSystem : MonoBehaviour
 
     IEnumerator CountdownTimer()
     {
+        //new code
+        if (remainingTime == null)
+        {
+           // Debug.LogWarning("Remaining time is not set in the tutorial scene.");
+            yield break; // Exit coroutine if remainingTime is null
+        }
+
+
+        if (CurrencyIncreasePupup == null)
+        {
+           // Debug.Log("CurrencyIncreasePupup is not assigned.");
+            yield break;
+        }
+
+        if (gameVariables?.statisticsInfo == null || gameVariables?.resourcesInfo == null)
+        {
+           // Debug.LogError("One or more gameVariables components (statisticsInfo or resourcesInfo) or ResourcesInfo is missing.");
+            yield break;
+        }
+        //new code
         float elapsedTime = 0f;
         while (isCountingDown)
         {
