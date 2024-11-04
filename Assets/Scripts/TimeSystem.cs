@@ -27,7 +27,8 @@ public class TimeSystem : MonoBehaviour
     private float intervalTimer = 0f;
     private const float intervalDuration = 19f; // Interval of 20 seconds
     public int[] towerSpawnedArray = new int[6];
-
+    int count = 0;
+    int countTower = 0;
     public void Init()
     {
         gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
@@ -98,8 +99,7 @@ public class TimeSystem : MonoBehaviour
            // Debug.LogError("One or more gameVariables components (statisticsInfo or resourcesInfo) or ResourcesInfo is missing.");
             yield break;
         }
-        int count = 0;
-        int countTower = 0;
+        
         //new code
         float elapsedTime = 0f;
         while (isCountingDown)
@@ -154,8 +154,11 @@ public class TimeSystem : MonoBehaviour
         String SessionID = DateTime.UtcNow.Ticks.ToString();
         while (arrayIndex != 6)
         {
-            attackersSpawnedArray[arrayIndex] = 0;
-            towerSpawnedArray[arrayIndex] = 0;
+            attackersSpawnedArray[arrayIndex] = spawner.numberOfEnemiesSpawned - count;
+            count = spawner.numberOfEnemiesSpawned;
+            turretsPlaced = Plot.numberOfTurretsPlaced;
+            towerSpawnedArray[arrayIndex] = turretsPlaced - countTower;
+            countTower = turretsPlaced;
             arrayIndex++;
         }
         if (googleFormSubmit != null)
