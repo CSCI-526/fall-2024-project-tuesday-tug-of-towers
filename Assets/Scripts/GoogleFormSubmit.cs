@@ -8,18 +8,30 @@ public class GoogleFormSubmit : MonoBehaviour
     private string formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdQe96I6vwuUjWrW77nIZjvqpjlDf3ZkI5GtlnVV9qxmVMqfw/formResponse";
 
     // Make the method public so it can be accessed from another script
-    public void SubmitData(string sessionId, string winner, int numAttackers, int numTurrets)
+    public void SubmitData(string sessionId, string winner, int[] attacker, int[] tower, string time)
     {
-        StartCoroutine(PostToGoogleForm(sessionId, winner, numAttackers, numTurrets));
+        StartCoroutine(PostToGoogleForm(sessionId, winner, attacker, tower, time));
     }
 
-    private IEnumerator PostToGoogleForm(string sessionId, string winner, int numAttackers, int numTurrets)
+    private IEnumerator PostToGoogleForm(string sessionId, string winner, int[] attacker,int[] tower, string time)
     {
         WWWForm form = new WWWForm();
         form.AddField("entry.2040210924", sessionId);
         form.AddField("entry.1013643412", winner);
-        form.AddField("entry.1003807920", numAttackers.ToString());
-        form.AddField("entry.209927190", numTurrets.ToString());
+        form.AddField("entry.1293289384", time);
+        form.AddField("entry.36132492", attacker[0].ToString());
+        form.AddField("entry.1368036508", attacker[1].ToString());
+        form.AddField("entry.1838745211", attacker[2].ToString());
+        form.AddField("entry.643939521", attacker[3].ToString());
+        form.AddField("entry.1054348219", attacker[4].ToString());
+        form.AddField("entry.1244488099", attacker[5].ToString());
+        form.AddField("entry.1900819260", tower[0].ToString());
+        form.AddField("entry.1102537106", tower[1].ToString());
+        form.AddField("entry.81736501", tower[2].ToString());
+        form.AddField("entry.2109547119", tower[3].ToString());
+        form.AddField("entry.365558643", tower[4].ToString());
+        form.AddField("entry.1238349847", tower[5].ToString());
+
 
         using (UnityWebRequest www = UnityWebRequest.Post(formURL, form))
         {

@@ -12,7 +12,7 @@ public class TimeSystem : MonoBehaviour
 
     private GameVariables gameVariables;
     private Calculation calculation;
-    private TimeSpan remainingTime;
+    public TimeSpan remainingTime;
     private bool isCountingDown = true;
     private int initialHours;
     private int initialMinutes;
@@ -20,6 +20,13 @@ public class TimeSystem : MonoBehaviour
     private float attackMoneyIncreasePeriod;
     private EnemySpawner spawner;
     int turretsPlaced;
+
+    // Array to store the number of attackers spawned at each 20-second interval
+    public int[] attackersSpawnedArray = new int[6];
+    public int arrayIndex = 0;
+    private float intervalTimer = 0f;
+    private const float intervalDuration = 19f; // Interval of 20 seconds
+    public int[] towerSpawnedArray = new int[6];
 
     public void Init()
     {
@@ -50,6 +57,25 @@ public class TimeSystem : MonoBehaviour
         attackMoneyIncreasePeriod = gameVariables.statisticsInfo.attackMoneyIncreasePeriod;
         StartCoroutine(CountdownTimer());
     }
+    public int[] GetAttackersSpawnedArray()
+    {
+        return attackersSpawnedArray;
+    }
+
+    public int[] GetTowerSpawnedArray()
+    {
+        return towerSpawnedArray;
+    }
+
+    public int GetArrayIndex()
+    {
+        return arrayIndex;
+    }
+
+    public string GetElapsedTime()
+    {
+        return (120f - (int)remainingTime.TotalSeconds).ToString();
+    }
 
     IEnumerator CountdownTimer()
     {
@@ -72,6 +98,8 @@ public class TimeSystem : MonoBehaviour
            // Debug.LogError("One or more gameVariables components (statisticsInfo or resourcesInfo) or ResourcesInfo is missing.");
             yield break;
         }
+        int count = 0;
+        int countTower = 0;
         //new code
         float elapsedTime = 0f;
         while (isCountingDown)
@@ -83,6 +111,21 @@ public class TimeSystem : MonoBehaviour
                 remainingTime = remainingTime.Subtract(new TimeSpan(0, 0, 1));
                 gameVariables.systemInfo.currentTimeString = remainingTime.ToString();
                 elapsedTime += countdownRate;
+                intervalTimer += countdownRate; // Track time for each 20-second interval
+
+                // Check if the 20-second interval has passed
+                if (intervalTimer >= intervalDuration && arrayIndex < attackersSpawnedArray.Length)
+                {
+                    Debug.Log(spawner.numberOfEnemiesSpawned);
+                    attackersSpawnedArray[arrayIndex] = spawner.numberOfEnemiesSpawned - count;
+                    count = spawner.numberOfEnemiesSpawned;
+                    turretsPlaced = Plot.numberOfTurretsPlaced;
+                    towerSpawnedArray[arrayIndex] = turretsPlaced - countTower;
+                    countTower = turretsPlaced;
+                    arrayIndex++;
+                    intervalTimer = 0f; // Reset interval timer for the next interval
+                }
+
                 if (elapsedTime >= attackMoneyIncreasePeriod)
                 {
                     if (gameVariables.resourcesInfo.attackMoney + gameVariables.statisticsInfo.attackMoneyRate >= ResourcesInfo.maxAttackMoney)
@@ -99,25 +142,36 @@ public class TimeSystem : MonoBehaviour
                 isCountingDown = false;
                 Debug.Log("Countdown end");
                 // Load the DefenderWin scene when time reaches 0
-                turretsPlaced = Plot.numberOfTurretsPlaced;
-                String SessionID = DateTime.UtcNow.Ticks.ToString();
-                if (googleFormSubmit != null)
-                {
-                    // Example data to send
-                    string sessionId = SessionID;
-                    string winner = "Defender";
-                    int numAttackers = spawner.numberOfEnemiesSpawned;
-                    int numTurrets = turretsPlaced;
-
-                    // Call the SubmitData function
-                    googleFormSubmit.SubmitData(sessionId, winner, numAttackers, numTurrets);
-                }
-                else
-                {
-                    Debug.LogError("GoogleFormSubmit component not assigned!");
-                }
+                FormSubmit("Defender");
+               
                 SceneManager.LoadScene("DefenderWin"); // Added line to load the DefenderWin scene
             }
+        }
+    }
+
+    public void FormSubmit(string win)
+    {
+        String SessionID = DateTime.UtcNow.Ticks.ToString();
+        while (arrayIndex != 6)
+        {
+            attackersSpawnedArray[arrayIndex] = 0;
+            towerSpawnedArray[arrayIndex] = 0;
+            arrayIndex++;
+        }
+        if (googleFormSubmit != null)
+        {
+            // Example data to send
+            string sessionId = SessionID;
+            string winner = win;
+            int numAttackers = spawner.numberOfEnemiesSpawned;
+            int numTurrets = turretsPlaced;
+
+            // Call the SubmitData function
+            googleFormSubmit.SubmitData(sessionId, winner, attackersSpawnedArray, towerSpawnedArray, (120f - (int)remainingTime.TotalSeconds).ToString());
+        }
+        else
+        {
+            Debug.LogError("GoogleFormSubmit component not assigned!");
         }
     }
 

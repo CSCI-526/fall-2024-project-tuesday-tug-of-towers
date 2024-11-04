@@ -2648,7 +2648,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.8
+  m_fontSize: 22.05
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3030,7 +3030,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51.05
+  m_fontSize: 54.55
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6064,7 +6064,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46.05
+  m_fontSize: 49.2
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6425,7 +6425,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.35
+  m_fontSize: 36.7
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8835,8 +8835,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countdownRate: 1
-  googleFormSubmit: {fileID: 0}
+  googleFormSubmit: {fileID: 2117237115}
   CurrencyIncreasePupup: {fileID: 373217795}
+  attackersSpawnedArray: 000000000000000000000000000000000000000000000000
+  towerSpawnedArray: 000000000000000000000000000000000000000000000000
 --- !u!4 &701048856
 Transform:
   m_ObjectHideFlags: 0
@@ -13080,7 +13082,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21.8
+  m_fontSize: 22.05
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -13586,7 +13588,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.35
+  m_fontSize: 36.7
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -20556,6 +20558,7 @@ MonoBehaviour:
     cost: 200
     prefab: {fileID: 8427495842291404156, guid: b4ffcc767784c7247b66efdf621e33d9, type: 3}
   popupManager: {fileID: 285399607}
+  placedTowerCount: 0
 --- !u!1001 &1940336999
 PrefabInstance:
   m_ObjectHideFlags: 0

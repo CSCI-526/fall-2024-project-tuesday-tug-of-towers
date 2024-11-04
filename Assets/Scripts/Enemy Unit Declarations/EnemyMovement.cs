@@ -21,6 +21,7 @@ public class EnemyMovement : MonoBehaviour
     private float baseSpeed;
     private Transform[] currentPath;  // Store the current path
     private GameVariables gameVariables;
+    public TimeSystem timeSystem;
 
     private void Start()
     {
@@ -72,32 +73,26 @@ public class EnemyMovement : MonoBehaviour
                 // Check if defense life has reached zero
                 if (gameVariables.resourcesInfo.defenseLife <= 0)
                 {
-                    turretsPlaced = Plot.numberOfTurretsPlaced;
-                    string sessionId = DateTime.UtcNow.Ticks.ToString();
-
-                    if (googleFormSubmit != null)
+                    timeSystem = FindObjectOfType<TimeSystem>();
+                    if (timeSystem != null)
                     {
-                        // Submit data
-                        string winner = "Attacker";
-                        int numAttackers = spawner.numberOfEnemiesSpawned;
-                        int numTurrets = turretsPlaced;
-
-                        googleFormSubmit.SubmitData(sessionId, winner, numAttackers, numTurrets);
+                        timeSystem.FormSubmit("Attacker");
                     }
                     else
                     {
-                        Debug.LogError("GoogleFormSubmit component not assigned!");
+                        Debug.Log("Not assigned");
                     }
 
                     SceneManager.LoadScene("AttackerWin"); // Load the AttackerWin scene
                 }
+
 
                 EnemySpawner.onEnemyDestroy.Invoke();
                 Destroy(gameObject); // Destroy the game object when reaching the end
             }
             else
             {
-                target = currentPath[pathIndex];
+                target = currentPath[pathIndex];  
             }
         }
     }
