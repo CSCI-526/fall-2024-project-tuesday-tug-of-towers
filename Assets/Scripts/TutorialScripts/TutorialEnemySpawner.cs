@@ -26,25 +26,32 @@ public class TutorialEnemySpawner : MonoBehaviour
     private bool isSpawning = false;
     private bool firstWave = true;
 
+    private GameVariables gameVariables;
+    private EnemySpawner enemyS;
+
     private void Awake()
     {
         onTEnemyDestroy.AddListener(EnemyDestroyed);
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
     }
     private void Update()
     {if (!isSpawning) return;
         ttimeSinceLastSpwan += Time.deltaTime;
-
-        if(ttimeSinceLastSpwan >= (1f/ tenemiesPerSecond) && tenemiesleftToSpwan > 0)
+        int wave = gameVariables.systemInfo.wave;
+        bool continueSpawn = gameVariables.systemInfo.continueSpawn;
+        //if (currentWave == 2) { Debug.Log(1); };
+        if (ttimeSinceLastSpwan >= (1f/ tenemiesPerSecond) && tenemiesleftToSpwan > 0 && continueSpawn == true)
         {
             tSpawnEnemy();
             tenemiesleftToSpwan--;
             tenemiesAlive++;
             ttimeSinceLastSpwan = 0f;
         }
-
-        if(tenemiesAlive == 0 && tenemiesleftToSpwan == 0)
+      
+        if (tenemiesAlive == 0 && tenemiesleftToSpwan == 0)
         {
             EndWave();
+            gameVariables.systemInfo.wave += 1;
         }
     }
 
@@ -69,6 +76,7 @@ public class TutorialEnemySpawner : MonoBehaviour
     private void Start()
     {
         StartCoroutine(StartWave());
+        enemyS = FindObjectOfType<EnemySpawner>();
     }
 
 

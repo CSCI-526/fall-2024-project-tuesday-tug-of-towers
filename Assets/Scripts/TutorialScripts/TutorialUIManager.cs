@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -20,18 +21,23 @@ public class TutorialUIManager : MonoBehaviour
     private Color yellowColor = Color.yellow; 
     public UnityEngine.UI.Button towerButton;
 
+    private GameVariables gameVariables;
+
     private enum TutorialStep
     {
         RoleDecision,
         DefenderIntro,
         DefenderTutorial,
         ShowTowerSelection,
-        PlaceTower
+        PlaceTower,
+        AttackerIntro,
+        End
     }
     private TutorialStep currentStep = TutorialStep.RoleDecision;
 
     private void Start()
     {
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
         AdvanceStep(); 
     }
 
@@ -53,10 +59,19 @@ public class TutorialUIManager : MonoBehaviour
                 break;
             case TutorialStep.ShowTowerSelection:
                 StartCoroutine(HandleTurretImageVisibility());
-                currentStep = TutorialStep.PlaceTower;
+                currentStep = TutorialStep.AttackerIntro;
+                //currentStep = TutorialStep.PlaceTower;
                 break;
             case TutorialStep.PlaceTower:
                 HighlightPlot();
+                currentStep = TutorialStep.AttackerIntro;
+                break;
+            case TutorialStep.AttackerIntro:
+                StartCoroutine(AttackerIntro());
+                currentStep = TutorialStep.End;
+                break;
+            case TutorialStep.End:
+                BackToMain();
                 break;
         }
     }
@@ -64,6 +79,11 @@ public class TutorialUIManager : MonoBehaviour
 
     bool isPanel1Confirmed = false;
     bool isPanel0Confirmed = false;
+
+    private void BackToMain()
+    {
+        SceneManager.LoadScene(0);
+    }
 
     private IEnumerator RoleDecision()
     {
@@ -134,14 +154,14 @@ public class TutorialUIManager : MonoBehaviour
         yield return new WaitUntil(() => buttonClicked);
         NextButton.gameObject.SetActive(false);
 
-        //InstructText.text = "Defender Only Use Mouse Control";
-        //yield return new WaitForSeconds(3);
-        //NextButton.gameObject.SetActive(true);
+        InstructText.text = "Click the tower and build it on the map.";
+        yield return new WaitForSeconds(3);
+        NextButton.gameObject.SetActive(true);
 
-        //buttonClicked = false;
-        //NextButton.onClick.AddListener(() => buttonClicked = true);
-        //yield return new WaitUntil(() => buttonClicked);
-        //NextButton.gameObject.SetActive(false);
+        buttonClicked = false;
+        NextButton.onClick.AddListener(() => buttonClicked = true);
+        yield return new WaitUntil(() => buttonClicked);
+        NextButton.gameObject.SetActive(false);
 
         mask1.SetActive(false);
         AdvanceStep();
@@ -154,6 +174,48 @@ public class TutorialUIManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         HighlightPlot();
         AdvanceStep();
+    }
+
+    private IEnumerator AttackerIntro()
+    {
+        Transform panel1 = mask1.transform.Find("Panel1");
+        GameObject InstructButton = panel1.Find("instruct")?.gameObject;
+        TextMeshProUGUI InstructText = InstructButton?.GetComponentInChildren<TextMeshProUGUI>();
+        Button NextButton = panel1.Find("next")?.GetComponent<Button>();
+
+        yield return new WaitForSeconds(1);
+        mask1.SetActive(true);
+        InstructText.text = "Now is Attacker Tutorial";
+        yield return new WaitForSeconds(3);
+        NextButton.gameObject.SetActive(true);
+
+        bool buttonClicked = false;
+        NextButton.onClick.AddListener(() => buttonClicked = true);
+        yield return new WaitUntil(() => buttonClicked);
+        NextButton.gameObject.SetActive(false);
+
+        InstructText.text = "Press keyboard button 1 or 2 to spawn Enemies.";
+        yield return new WaitForSeconds(3);
+        NextButton.gameObject.SetActive(true);
+
+        buttonClicked = false;
+        NextButton.onClick.AddListener(() => buttonClicked = true);
+        yield return new WaitUntil(() => buttonClicked);
+        NextButton.gameObject.SetActive(false);
+
+        InstructText.text = "End of Tutorial, back to Main Menu.";
+        yield return new WaitForSeconds(3);
+        NextButton.gameObject.SetActive(true);
+
+        buttonClicked = false;
+        NextButton.onClick.AddListener(() => buttonClicked = true);
+        yield return new WaitUntil(() => buttonClicked);
+        NextButton.gameObject.SetActive(false);
+
+        mask1.SetActive(false);
+        AdvanceStep();
+        yield return null;
+
     }
 
     private IEnumerator HandleTurretImageVisibility()
@@ -201,6 +263,11 @@ public class TutorialUIManager : MonoBehaviour
     }
     public void UpdateTotalCount(int count)
     {
+        if (count == 0)
+        {
+            gameVariables.systemInfo.continueSpawn = false;
+            AdvanceStep();
+        }
         totalCountText.text = count.ToString(); 
     }
 
