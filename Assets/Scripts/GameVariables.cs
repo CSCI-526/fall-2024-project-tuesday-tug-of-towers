@@ -11,9 +11,6 @@ public class SystemInfo : Info
     public string currentTimeString = "00:02:00";
     public int pause = 0; // 0 means continue, 1 means pause
     public string pauseShow = "Paused";
-
-    public int wave = 0;
-    public bool continueSpawn = true;
 }
 
 public class ResourcesInfo : Info
@@ -31,11 +28,19 @@ public class StatisticsInfo : Info
     public float attackMoneyIncreasePeriod = 5f;
 }
 
+public class TutorialInfo : Info
+{
+    public bool continueSpawn = false;
+    public bool towerPlaceable = false;
+    
+}
+
 public class GameVariables : MonoBehaviour
 {
     public SystemInfo systemInfo;
     public ResourcesInfo resourcesInfo;
     public StatisticsInfo statisticsInfo;
+    public TutorialInfo tutorialInfo;
 
     private GameObject systems;
 
@@ -59,6 +64,7 @@ public class GameVariables : MonoBehaviour
         systemInfo = new SystemInfo();
         resourcesInfo = new ResourcesInfo();
         statisticsInfo = new StatisticsInfo();
+        tutorialInfo = new TutorialInfo();
 
         systems = GameObject.Find("IndependentSystems");
         if (systems != null)

@@ -27,19 +27,20 @@ public class TutorialEnemySpawner : MonoBehaviour
     private bool firstWave = true;
 
     private GameVariables gameVariables;
-    private EnemySpawner enemyS;
+    private TutorialUIManager tutorialUIManager;
+    private bool enableManualEnemySpawn;
 
     private void Awake()
     {
         onTEnemyDestroy.AddListener(EnemyDestroyed);
         gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
+        tutorialUIManager = FindObjectOfType<TutorialUIManager>();
     }
     private void Update()
     {if (!isSpawning) return;
         ttimeSinceLastSpwan += Time.deltaTime;
-        int wave = gameVariables.systemInfo.wave;
-        bool continueSpawn = gameVariables.systemInfo.continueSpawn;
-        //if (currentWave == 2) { Debug.Log(1); };
+        bool continueSpawn = gameVariables.tutorialInfo.continueSpawn;
+        enableManualEnemySpawn = tutorialUIManager.enableManualEnemySpawn;
         if (ttimeSinceLastSpwan >= (1f/ tenemiesPerSecond) && tenemiesleftToSpwan > 0 && continueSpawn == true)
         {
             tSpawnEnemy();
@@ -47,7 +48,7 @@ public class TutorialEnemySpawner : MonoBehaviour
             tenemiesAlive++;
             ttimeSinceLastSpwan = 0f;
         }
-        else if(continueSpawn == false)
+        else if(enableManualEnemySpawn)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -61,7 +62,6 @@ public class TutorialEnemySpawner : MonoBehaviour
         if (tenemiesAlive == 0 && tenemiesleftToSpwan == 0)
         {
             EndWave();
-            gameVariables.systemInfo.wave += 1;
         }
     }
 
@@ -96,7 +96,6 @@ public class TutorialEnemySpawner : MonoBehaviour
     private void Start()
     {
         StartCoroutine(StartWave());
-        enemyS = FindObjectOfType<EnemySpawner>();
     }
 
 

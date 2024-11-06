@@ -13,6 +13,8 @@ public class TutorialPlot : MonoBehaviour
 
     [SerializeField] private Color highlightColor = Color.yellow; 
     private bool isHighlighted = false;
+    private GameVariables gameVariables;
+
     private void OnMouseEnter()
     {
         
@@ -70,6 +72,7 @@ public class TutorialPlot : MonoBehaviour
 
     private void Start()
     {
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
         startColor = sr.color;
     }
    /* private void OnMouseEnter()
@@ -84,6 +87,11 @@ public class TutorialPlot : MonoBehaviour
     private void OnMouseDown()
     {
         if (tower != null) return;
+
+        if (gameVariables.tutorialInfo.towerPlaceable == false)
+        {
+            return;
+        }
 
         if (TutorialLevelManager.main.totalCount <= 0)
         {
