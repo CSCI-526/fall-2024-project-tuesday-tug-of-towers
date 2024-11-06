@@ -12,7 +12,7 @@ public class TutorialEnemySpawner : MonoBehaviour
     [Header("Attribute")]
     [SerializeField] private int tbaseEnemies = 8;
     [SerializeField] private float tenemiesPerSecond = 0.5f;
-    [SerializeField] private float ttimeBetweenWaves = 0.2f;
+    [SerializeField] private float ttimeBetweenWaves = 0f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
 
     [Header("Events")]
@@ -47,6 +47,16 @@ public class TutorialEnemySpawner : MonoBehaviour
             tenemiesAlive++;
             ttimeSinceLastSpwan = 0f;
         }
+        else if(continueSpawn == false)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SpawnSingleEnemy(); 
+            }
+
+            if (!isSpawning) return;
+
+        }
       
         if (tenemiesAlive == 0 && tenemiesleftToSpwan == 0)
         {
@@ -55,6 +65,16 @@ public class TutorialEnemySpawner : MonoBehaviour
         }
     }
 
+    private void SpawnSingleEnemy()
+    {
+        // Always use the first enemy prefab (since it's a tutorial and you only have one)
+        GameObject tprefabToSpawn = tenemyPrefabs[0];
+
+        // Spawn the enemy at the single start point defined in TutorialLevelManager
+        Instantiate(tprefabToSpawn, TutorialLevelManager.main.tstartPoint.position, Quaternion.identity);
+
+        tenemiesAlive++;
+    }
     private void EnemyDestroyed()
     {
         tenemiesAlive--;

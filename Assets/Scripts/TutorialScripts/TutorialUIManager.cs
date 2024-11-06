@@ -70,9 +70,9 @@ public class TutorialUIManager : MonoBehaviour
                 StartCoroutine(AttackerIntro());
                 currentStep = TutorialStep.End;
                 break;
-            case TutorialStep.End:
+            /*case TutorialStep.End:
                 BackToMain();
-                break;
+                break;*/
         }
     }
 
@@ -194,7 +194,7 @@ public class TutorialUIManager : MonoBehaviour
         yield return new WaitUntil(() => buttonClicked);
         NextButton.gameObject.SetActive(false);
 
-        InstructText.text = "Press keyboard button 1 or 2 to spawn Enemies.";
+        InstructText.text = "Press keyboard button 1 to spawn Enemies.";
         yield return new WaitForSeconds(3);
         NextButton.gameObject.SetActive(true);
 
@@ -203,8 +203,8 @@ public class TutorialUIManager : MonoBehaviour
         yield return new WaitUntil(() => buttonClicked);
         NextButton.gameObject.SetActive(false);
 
-        InstructText.text = "End of Tutorial, back to Main Menu.";
-        yield return new WaitForSeconds(3);
+       /* InstructText.text = "End of Tutorial, back to Main Menu.";
+        yield return new WaitForSeconds(3);*/
         NextButton.gameObject.SetActive(true);
 
         buttonClicked = false;
