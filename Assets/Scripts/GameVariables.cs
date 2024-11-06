@@ -28,11 +28,19 @@ public class StatisticsInfo : Info
     public float attackMoneyIncreasePeriod = 5f;
 }
 
+public class TutorialInfo : Info
+{
+    public bool continueSpawn = false;
+    public bool towerPlaceable = false;
+    
+}
+
 public class GameVariables : MonoBehaviour
 {
     public SystemInfo systemInfo;
     public ResourcesInfo resourcesInfo;
     public StatisticsInfo statisticsInfo;
+    public TutorialInfo tutorialInfo;
 
     private GameObject systems;
 
@@ -56,6 +64,7 @@ public class GameVariables : MonoBehaviour
         systemInfo = new SystemInfo();
         resourcesInfo = new ResourcesInfo();
         statisticsInfo = new StatisticsInfo();
+        tutorialInfo = new TutorialInfo();
 
         systems = GameObject.Find("IndependentSystems");
         if (systems != null)
