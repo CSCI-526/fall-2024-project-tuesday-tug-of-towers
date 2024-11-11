@@ -55,6 +55,7 @@ public class EnemySpawner : MonoBehaviour
 
         // Get the EnemyStats component from the prefab
         EnemyStats enemyStats = prefabToSpawn.GetComponent<EnemyStats>();
+        enemyStats.startTime = Time.time;
         if (enemyStats == null)
         {
             Debug.LogError("EnemyStats component missing on prefab: " + prefabToSpawn.name);

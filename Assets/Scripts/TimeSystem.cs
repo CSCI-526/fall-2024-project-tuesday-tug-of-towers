@@ -2,10 +2,15 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; // Added for scene management
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
+using System.Linq; // Added for scene management
 
 public class TimeSystem : MonoBehaviour
 {
+   
+
+
     public float countdownRate = 1f;
     public GoogleFormSubmit googleFormSubmit;
     [SerializeField] private PopUpManager CurrencyIncreasePupup;
@@ -20,6 +25,18 @@ public class TimeSystem : MonoBehaviour
     private float attackMoneyIncreasePeriod;
     private EnemySpawner spawner;
     int turretsPlaced;
+
+    // Arrays to store money data
+    public int[] attackMoneyData = new int[24]; // Adjust size based on game duration
+    public int[] defenderMoneyData = new int[24]; // Adjust size based on game duration
+    private int moneyDataIndex = 0; // Index to track array positions
+
+    // Timer for recording money data every 5 seconds
+    private float moneyDataTimer = 0f;
+    private const float moneyDataInterval = 5f; // Interval of 5 seconds
+
+    public List<float> type1EnemyTime = new List<float>();
+    public List<float> type2EnemyTime = new List<float>();
 
     // Array to store the number of attackers spawned at each 20-second interval
     public int[] attackersSpawnedArray = new int[6];
@@ -112,11 +129,11 @@ public class TimeSystem : MonoBehaviour
                 gameVariables.systemInfo.currentTimeString = remainingTime.ToString();
                 elapsedTime += countdownRate;
                 intervalTimer += countdownRate; // Track time for each 20-second interval
+                moneyDataTimer += countdownRate;
 
                 // Check if the 20-second interval has passed
                 if (intervalTimer >= intervalDuration && arrayIndex < attackersSpawnedArray.Length)
                 {
-                    Debug.Log(spawner.numberOfEnemiesSpawned);
                     attackersSpawnedArray[arrayIndex] = spawner.numberOfEnemiesSpawned - count;
                     count = spawner.numberOfEnemiesSpawned;
                     turretsPlaced = Plot.numberOfTurretsPlaced;
@@ -124,6 +141,17 @@ public class TimeSystem : MonoBehaviour
                     countTower = turretsPlaced;
                     arrayIndex++;
                     intervalTimer = 0f; // Reset interval timer for the next interval
+                }
+
+                // Record money data every 5 seconds
+                if (moneyDataTimer >= moneyDataInterval && moneyDataIndex < attackMoneyData.Length)
+                {
+                    Debug.Log(gameVariables.resourcesInfo.attackMoney);
+                    Debug.Log(gameVariables.resourcesInfo.defenseMoney);
+                    attackMoneyData[moneyDataIndex] = gameVariables.resourcesInfo.attackMoney;
+                    defenderMoneyData[moneyDataIndex] = gameVariables.resourcesInfo.defenseMoney;
+                    moneyDataIndex++;
+                    moneyDataTimer = 0f; // Reset the timer
                 }
 
                 if (elapsedTime >= attackMoneyIncreasePeriod)
@@ -161,16 +189,36 @@ public class TimeSystem : MonoBehaviour
             countTower = turretsPlaced;
             arrayIndex++;
         }
+        while (moneyDataIndex < 24)
+        {
+            attackMoneyData[moneyDataIndex] = 0;
+            defenderMoneyData[moneyDataIndex] = 0;
+            moneyDataIndex++;
+        }
+        float enemy1, enemy2;
+        if (type1EnemyTime.Count == 0)
+        {
+            enemy1 = 0f;
+        }
+        else
+        {
+            enemy1= type1EnemyTime.Average();
+        }
+        if(type2EnemyTime.Count == 0)
+        {
+            enemy2 = 0f;
+        }
+        else
+        {
+            enemy2 = type2EnemyTime.Average();
+        }
+        
         if (googleFormSubmit != null)
         {
-            // Example data to send
-            string sessionId = SessionID;
-            string winner = win;
-            int numAttackers = spawner.numberOfEnemiesSpawned;
-            int numTurrets = turretsPlaced;
+           
 
             // Call the SubmitData function
-            googleFormSubmit.SubmitData(sessionId, winner, attackersSpawnedArray, towerSpawnedArray, (120f - (int)remainingTime.TotalSeconds).ToString());
+            googleFormSubmit.SubmitData(SessionID, win, attackersSpawnedArray, towerSpawnedArray, (120f - (int)remainingTime.TotalSeconds).ToString(), attackMoneyData, defenderMoneyData,enemy1,enemy2);
         }
         else
         {

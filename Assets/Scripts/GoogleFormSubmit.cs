@@ -8,14 +8,16 @@ public class GoogleFormSubmit : MonoBehaviour
     private string formURL = "https://docs.google.com/forms/d/e/1FAIpQLSdQe96I6vwuUjWrW77nIZjvqpjlDf3ZkI5GtlnVV9qxmVMqfw/formResponse";
 
     // Make the method public so it can be accessed from another script
-    public void SubmitData(string sessionId, string winner, int[] attacker, int[] tower, string time)
+    public void SubmitData(string sessionId, string winner, int[] attacker, int[] tower, string time, int[] attackerMoney, int[] defenderMoney, float avgEnemy1, float avgEnemy2)
     {
-        StartCoroutine(PostToGoogleForm(sessionId, winner, attacker, tower, time));
+        StartCoroutine(PostToGoogleForm(sessionId, winner, attacker, tower, time, attackerMoney, defenderMoney, avgEnemy1, avgEnemy2));
     }
 
-    private IEnumerator PostToGoogleForm(string sessionId, string winner, int[] attacker,int[] tower, string time)
+    private IEnumerator PostToGoogleForm(string sessionId, string winner, int[] attacker,int[] tower, string time, int[] attackerMoney, int[] defenderMoney, float avgEnemy1, float avgEnemy2)
     {
         WWWForm form = new WWWForm();
+        string AMoney = string.Join(", ", attackerMoney);
+        string DMoney = string.Join(", ", defenderMoney);
         form.AddField("entry.2040210924", sessionId);
         form.AddField("entry.1013643412", winner);
         form.AddField("entry.1293289384", time);
@@ -31,7 +33,10 @@ public class GoogleFormSubmit : MonoBehaviour
         form.AddField("entry.2109547119", tower[3].ToString());
         form.AddField("entry.365558643", tower[4].ToString());
         form.AddField("entry.1238349847", tower[5].ToString());
-
+        form.AddField("entry.458595264", AMoney);
+        form.AddField("entry.1963508772", DMoney);
+        form.AddField("entry.329402248", avgEnemy1.ToString());
+        form.AddField("entry.1554310974", avgEnemy2.ToString());
 
         using (UnityWebRequest www = UnityWebRequest.Post(formURL, form))
         {
