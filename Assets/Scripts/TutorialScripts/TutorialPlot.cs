@@ -13,6 +13,8 @@ public class TutorialPlot : MonoBehaviour
 
     [SerializeField] private Color highlightColor = Color.yellow; 
     private bool isHighlighted = false;
+    private GameVariables gameVariables;
+
     private void OnMouseEnter()
     {
         
@@ -68,13 +70,10 @@ public class TutorialPlot : MonoBehaviour
           }
       }*/
 
-    public TutorialUIManager tutorialUIManager;
     private void Start()
     {
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
         startColor = sr.color;
-        GameObject tutorialManagerObject = GameObject.Find("TutorialShareMenu");
-        tutorialUIManager = tutorialManagerObject.GetComponent<TutorialUIManager>();
-
     }
    /* private void OnMouseEnter()
     {
@@ -89,7 +88,10 @@ public class TutorialPlot : MonoBehaviour
     {
         if (tower != null) return;
 
-        if (tutorialUIManager.plotsLocked) return;
+        if (gameVariables.tutorialInfo.towerPlaceable == false)
+        {
+            return;
+        }
 
         if (TutorialLevelManager.main.totalCount <= 0)
         {
@@ -110,4 +112,6 @@ public class TutorialPlot : MonoBehaviour
 
         FindObjectOfType<TutorialUIManager>().RemoveHighlights();
     }
+
+
 }

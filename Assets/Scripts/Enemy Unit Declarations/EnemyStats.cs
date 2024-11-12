@@ -47,5 +47,4 @@ public class EnemyStats : MonoBehaviour
             Debug.LogError("Floating Text Prefab is not assigned.");
         }
     }
-
 }

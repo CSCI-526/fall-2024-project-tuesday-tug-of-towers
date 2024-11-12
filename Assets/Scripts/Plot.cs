@@ -7,6 +7,7 @@ public class Plot : MonoBehaviour
     [Header("References")]
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor;
+    [SerializeField] private bool isGoldMine = false;
 
     private GameObject tower;
     private Color startColor;
@@ -35,10 +36,18 @@ public class Plot : MonoBehaviour
 
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
 
-        if (towerToBuild == null)
-            return;
+        if (isGoldMine)
+        {
+            if (towerToBuild.name != "GoldMining Tower") return;
+        }
+        else
+        {
+            if (towerToBuild.name == "GoldMining Tower") return;
+        }
+        
+        if (towerToBuild == null) return;
 
-        if(towerToBuild.cost > gameVariables.resourcesInfo.defenseMoney)
+        if (towerToBuild.cost > gameVariables.resourcesInfo.defenseMoney)
         {
             Debug.Log("Can't afford this");
             return;
