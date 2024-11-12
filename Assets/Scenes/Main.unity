@@ -8835,8 +8835,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countdownRate: 1
-  googleFormSubmit: {fileID: 0}
+  googleFormSubmit: {fileID: 2117237115}
   CurrencyIncreasePupup: {fileID: 373217795}
+  attackersSpawnedArray: 000000000000000000000000000000000000000000000000
+  towerSpawnedArray: 000000000000000000000000000000000000000000000000
 --- !u!4 &701048856
 Transform:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     public GoogleFormSubmit googleFormSubmit;
+    
 
     [Header("Attributes")]
     [SerializeField] private float moveSpeed = 4f;
@@ -21,18 +22,36 @@ public class EnemyMovement : MonoBehaviour
     private float baseSpeed;
     private Transform[] currentPath;  // Store the current path
     private GameVariables gameVariables;
-
+    private EnemyStats enemyStats;
+    public GameObject systemsObject;
+    public TimeSystem timeSystem;
     private void Start()
     {
         baseSpeed = moveSpeed;
-
+        systemsObject = GameObject.Find("IndependentSystems");
+        if (systemsObject != null)
+        {
+            timeSystem = systemsObject.GetComponent<TimeSystem>();
+            if (timeSystem != null)
+            {
+                Debug.Log("Successfully accessed TimeSystem.");
+            }
+            else
+            {
+                Debug.LogError("TimeSystem component not found on IndependentSystems GameObject!");
+            }
+        }
+        else
+        {
+            Debug.LogError("IndependentSystems GameObject not found!");
+        }
         // Get the currently selected path from LevelManager
         currentPath = LevelManager.main.GetSelectedPath();
         target = currentPath[pathIndex];
 
         gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
         spawner = FindObjectOfType<EnemySpawner>();
-
+        enemyStats = GetComponent<EnemyStats>();
         GameObject managerObj = GameObject.Find("GoogleFormManager");
 
         if (managerObj != null)
@@ -51,7 +70,7 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            if(SceneManager.GetActiveScene().name == "Main")
+            if (SceneManager.GetActiveScene().name == "Main")
             {
                 Debug.LogError("GoogleFormManager GameObject not found!");
             }
@@ -66,30 +85,25 @@ public class EnemyMovement : MonoBehaviour
 
             if (pathIndex == currentPath.Length)
             {
-                // Enemy reached the end of the path
                 DefenseLifeDecrease(1);
 
                 // Check if defense life has reached zero
+                Debug.Log(gameVariables.resourcesInfo.defenseLife);
                 if (gameVariables.resourcesInfo.defenseLife <= 0)
                 {
-                    turretsPlaced = Plot.numberOfTurretsPlaced;
-                    string sessionId = DateTime.UtcNow.Ticks.ToString();
-
-                    if (googleFormSubmit != null)
-                    {
-                        // Submit data
-                        string winner = "Attacker";
-                        int numAttackers = spawner.numberOfEnemiesSpawned;
-                        int numTurrets = turretsPlaced;
-
-                        googleFormSubmit.SubmitData(sessionId, winner, numAttackers, numTurrets);
-                    }
-                    else
-                    {
-                        Debug.LogError("GoogleFormSubmit component not assigned!");
-                    }
-
+                    
+                    timeSystem.FormSubmit("Attacker");
+                    Debug.Log("Here");
                     SceneManager.LoadScene("AttackerWin"); // Load the AttackerWin scene
+                }
+                float timeAlive = Time.time - enemyStats.startTime;
+                if (enemyStats.currencyWorth > 60)
+                {
+                    timeSystem.type2EnemyTime.Add(timeAlive);
+                }
+                else
+                {
+                    timeSystem.type1EnemyTime.Add(timeAlive);
                 }
 
                 EnemySpawner.onEnemyDestroy.Invoke();
