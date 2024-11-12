@@ -23,14 +23,14 @@ public class BuildManager : MonoBehaviour
 
     public Tower GetSelectedTower()
     {
-        if (placedTowerCount < 5)
+        if (placedTowerCount < 10)
             return towers[selectedTower];
         else return null;
     }
 
     public void SetSelectedTower(int _selectedTower)
     {
-        if(placedTowerCount == 5)
+        if(placedTowerCount == 10)
         {
             popupManager.ShowMessage("Defender has reached the limit");
             return;
