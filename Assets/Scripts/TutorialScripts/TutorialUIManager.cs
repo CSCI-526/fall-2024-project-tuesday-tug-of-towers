@@ -188,6 +188,7 @@ public class TutorialUIManager : MonoBehaviour
         yield return null;
 
     }
+    
 
     private IEnumerator DefenderTutorial()
     {

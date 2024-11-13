@@ -101,9 +101,6 @@ public class TutorialEnemySpawner : MonoBehaviour
 
     private IEnumerator StartWave()
     {
-        /* yield return new WaitForSeconds(ttimeBetweenWaves);
-         isSpawning = true;
-         tenemiesleftToSpwan = tbaseEnemies;*/
         if (firstWave)
         {
             yield return new WaitForSeconds(4f);
