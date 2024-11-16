@@ -7,10 +7,13 @@ public class Plot : MonoBehaviour
     [Header("References")]
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor;
+    [SerializeField] private Color selectedColor; // Color when a tower is selected for moving
 
     private GameObject tower;
     private Color startColor;
     public static int numberOfTurretsPlaced = 0;
+    private static GameObject selectedTower = null; // Currently selected tower for moving
+    private static Plot selectedPlot = null; // Plot containing the selected tower
     private GameVariables gameVariables;
 
     private void Start()
@@ -21,33 +24,111 @@ public class Plot : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        // Highlight the plot on hover
         sr.color = hoverColor;
     }
 
     private void OnMouseExit()
     {
-        sr.color = startColor;
+        // Reset the color when the mouse leaves
+        sr.color = (selectedTower != null && selectedPlot == this) ? selectedColor : startColor;
     }
 
     private void OnMouseDown()
     {
-        if (tower != null) return;
-
-        Tower towerToBuild = BuildManager.main.GetSelectedTower();
-
-        if (towerToBuild == null)
-            return;
-
-        if(towerToBuild.cost > gameVariables.resourcesInfo.defenseMoney)
+        // Handle tower relocation if a tower is already selected
+        if (selectedTower != null)
         {
-            Debug.Log("Can't afford this");
+            HandleTowerRelocation();
             return;
         }
-        numberOfTurretsPlaced++;
-        //Debug.Log(numberOfTurretsPlaced);
-        LevelManager.main.SpendCurrency(towerToBuild.cost);
 
-        tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
-        BuildManager.main.placedTowerCount++;
+        // Handle tower selection if there's a tower on this plot
+        if (tower != null)
+        {
+            SelectTower();
+            return;
+        }
+
+        // Handle normal tower placement
+        PlaceOrReplaceTower();
+    }
+
+    private void HandleTowerRelocation()
+    {
+        // Move the selected tower to an empty plot
+        if (tower == null)
+        {
+            tower = selectedTower;
+            tower.transform.position = transform.position;
+
+            // Clear the old plot's tower
+            selectedPlot.ClearTower();
+
+            // Deselect the tower
+            selectedTower = null;
+            selectedPlot = null;
+
+            Debug.Log("Tower successfully moved!");
+        }
+        else
+        {
+            Debug.Log("This plot is already occupied!");
+        }
+    }
+
+    private void SelectTower()
+    {
+        selectedTower = tower;
+        selectedPlot = this;
+        sr.color = selectedColor; // Change color to indicate selection
+        Debug.Log("Tower selected for moving!");
+    }
+
+    private void PlaceOrReplaceTower()
+    {
+        // Get the tower to build from the BuildManager
+        Tower towerToBuild = BuildManager.main.GetSelectedTower();
+
+        // Return if no tower is selected to build
+        if (towerToBuild == null) return;
+
+        // Check if the player can afford the tower
+        if (towerToBuild.cost > gameVariables.resourcesInfo.defenseMoney)
+        {
+            Debug.Log("Can't afford this tower!");
+            return;
+        }
+
+        if (tower != null)
+        {
+            // Replace the existing tower if it's a different type
+            if (tower.name != towerToBuild.prefab.name)
+            {
+                Destroy(tower); // Destroy the old tower
+                LevelManager.main.SpendCurrency(towerToBuild.cost);
+                tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
+                Debug.Log("Replaced the existing tower with a new one!");
+            }
+            else
+            {
+                Debug.Log("Cannot place the same tower on this plot!");
+            }
+        }
+        else
+        {
+            // Deduct currency and place the tower
+            numberOfTurretsPlaced++;
+            LevelManager.main.SpendCurrency(towerToBuild.cost);
+            tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
+            BuildManager.main.placedTowerCount++;
+        }
+    }
+
+    private void ClearTower()
+    {
+        // Clear the selected tower from the plot
+        tower = null;
+        sr.color = startColor;
     }
 }
