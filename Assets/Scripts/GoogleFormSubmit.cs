@@ -19,6 +19,7 @@ public class GoogleFormSubmit : MonoBehaviour
         string AMoney = string.Join(", ", attackerMoney);
         string DMoney = string.Join(", ", defenderMoney);
         form.AddField("entry.2040210924", sessionId);
+
         form.AddField("entry.1013643412", winner);
         form.AddField("entry.1293289384", time);
         form.AddField("entry.36132492", attacker[0].ToString());
@@ -48,6 +49,7 @@ public class GoogleFormSubmit : MonoBehaviour
             }
             else
             {
+                Debug.Log("Form submission queued");
                 Debug.Log("Form submission complete!");
             }
         }
@@ -63,6 +65,13 @@ public class GoogleFormSubmit : MonoBehaviour
 //    public void OnGameEnd(string sessionId, string winner, int numAttackers, int numTurrets)
 //    {
 //        StartCoroutine(PostToGoogleForm(sessionId, winner, numAttackers, numTurrets));
+//    }
+
+//    private IEnumerator PostToGoogleForm(string sessionId, string winner, int numAttackers, int numTurrets)
+//    {
+
+//    }
+//}
 //    }
 
 //    private IEnumerator PostToGoogleForm(string sessionId, string winner, int numAttackers, int numTurrets)
