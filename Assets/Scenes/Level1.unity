@@ -625,6 +625,10 @@ PrefabInstance:
       propertyPath: popupPrefab
       value: 
       objectReference: {fileID: 934094965}
+    - target: {fileID: -7709851170756673921, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
+      propertyPath: isMoneyTower
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 614823431677881609, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
       propertyPath: m_Color.a
       value: 0.50980395

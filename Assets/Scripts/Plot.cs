@@ -13,6 +13,7 @@ public class Plot : MonoBehaviour
     [SerializeField] private int relocationCost = 50;
     [SerializeField] private GameObject popupPrefab; // Assign the PopUp prefab in the Inspector
     [SerializeField] private Canvas canvas; // Drag your "Option" Canvas here in the Inspector
+    [SerializeField] private bool isMoneyTower = false;
     private GameObject popupInstance;
 
     private GameObject tower;
@@ -104,6 +105,13 @@ public class Plot : MonoBehaviour
 
     private void HandleRelocationMode()
     {
+        // Check if the plot is restricted
+        if (isMoneyTower)
+        {
+            Debug.Log("Cannot relocate towers to this plot!");
+            return;
+        }
+
         if (tower == null)
         {
             if (gameVariables.resourcesInfo.defenseMoney < relocationCost)
@@ -171,6 +179,13 @@ public class Plot : MonoBehaviour
 
     private void PlaceTower()
     {
+        // Check if the plot is restricted
+        if (isMoneyTower)
+        {
+            Debug.Log("Cannot place towers on this plot!");
+            return;
+        }
+
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
         if (towerToBuild == null) return;
 

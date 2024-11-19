@@ -304,6 +304,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoldMiningTower
       objectReference: {fileID: 0}
+    - target: {fileID: 3919476682487753481, guid: 55c68cd8352eb114281cb169039b4a1f, type: 3}
+      propertyPath: GoldMiningTowerPlot
+      value: 
+      objectReference: {fileID: 61952460}
     - target: {fileID: 5834771714025299637, guid: 55c68cd8352eb114281cb169039b4a1f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.971
@@ -569,6 +573,10 @@ PrefabInstance:
       propertyPath: popupPrefab
       value: 
       objectReference: {fileID: 4568238679819779926}
+    - target: {fileID: -7709851170756673921, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
+      propertyPath: isMoneyTower
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 614823431677881609, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
       propertyPath: m_Color.a
       value: 0.50980395
@@ -637,6 +645,11 @@ PrefabInstance:
 --- !u!4 &61952459 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4180763184079012131, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
+  m_PrefabInstance: {fileID: 61952458}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &61952460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4324901499135233314, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
   m_PrefabInstance: {fileID: 61952458}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &64095883
@@ -7324,6 +7337,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GoldMiningTower (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3919476682487753481, guid: 55c68cd8352eb114281cb169039b4a1f, type: 3}
+      propertyPath: GoldMiningTowerPlot
+      value: 
+      objectReference: {fileID: 1885860038}
     - target: {fileID: 5834771714025299637, guid: 55c68cd8352eb114281cb169039b4a1f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.92
@@ -26906,6 +26923,10 @@ PrefabInstance:
       propertyPath: popupPrefab
       value: 
       objectReference: {fileID: 4568238679819779926}
+    - target: {fileID: -7709851170756673921, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
+      propertyPath: isMoneyTower
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 614823431677881609, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
       propertyPath: m_Color.a
       value: 0.50980395
@@ -26974,6 +26995,11 @@ PrefabInstance:
 --- !u!4 &1885860037 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4180763184079012131, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
+  m_PrefabInstance: {fileID: 1885860036}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1885860038 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4324901499135233314, guid: 3c0c7b07979a842c5889b12842ac9cb3, type: 3}
   m_PrefabInstance: {fileID: 1885860036}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1889632351
