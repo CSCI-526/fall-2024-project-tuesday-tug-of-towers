@@ -24,7 +24,11 @@ public class BuildManager : MonoBehaviour
     public Tower GetSelectedTower()
     {
         if (placedTowerCount < 10)
+        {
+            gameVariables.resourcesInfo.remainingTower = gameVariables.resourcesInfo.remainingTower - 1;
             return towers[selectedTower];
+        }
+            
         else return null;
     }
 
