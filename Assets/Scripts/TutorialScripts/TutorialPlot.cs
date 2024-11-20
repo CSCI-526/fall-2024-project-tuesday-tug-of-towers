@@ -75,15 +75,6 @@ public class TutorialPlot : MonoBehaviour
         gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
         startColor = sr.color;
     }
-   /* private void OnMouseEnter()
-    {
-        sr.color = hoverColor;
-    }
-
-    private void OnMouseExit()
-    {
-        sr.color = startColor;
-    }*/
     private void OnMouseDown()
     {
         if (tower != null) return;
