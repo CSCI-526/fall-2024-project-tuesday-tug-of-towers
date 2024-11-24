@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 public class PauseMenuManager : MonoBehaviour
 {
+    // UI Elements
     public GameObject pauseMenu; // Reference to the pause menu panel
-    public Button restartButton;
-    public Button menuButton;
-    public Button closeButton;
+    public Button restartButton; // Button to restart the game
+    public Button menuButton; // Button to go to the main menu
+    public Button closeButton; // Button to close the pause menu
 
-    private bool isGamePaused = false;
+    private bool isGamePaused = false; // Flag to check if the game is paused
 
     private void Start()
     {
@@ -31,8 +32,8 @@ public class PauseMenuManager : MonoBehaviour
     // Called when the pause button is clicked
     public void TogglePauseMenu()
     {
-        isGamePaused = !isGamePaused;
-        pauseMenu.SetActive(isGamePaused);
+        isGamePaused = !isGamePaused; // Toggle pause state
+        pauseMenu.SetActive(isGamePaused); // Show or hide pause menu
 
         // Pause or resume the game
         Time.timeScale = isGamePaused ? 0 : 1;
@@ -42,21 +43,21 @@ public class PauseMenuManager : MonoBehaviour
     private void RestartGame()
     {
         Time.timeScale = 1; // Resume time before restarting
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
     }
 
     // Go back to the main menu
     private void GoToMainMenu()
     {
         Time.timeScale = 1; // Resume time before switching scenes
-        SceneManager.LoadScene("Menu"); // Assuming Main Menu is Scene 0
+        SceneManager.LoadScene("Menu"); // Load the main menu scene
     }
 
     // Close the pause menu and resume the game
     private void ClosePauseMenu()
     {
-        isGamePaused = false;
-        pauseMenu.SetActive(false);
+        isGamePaused = false; // Unpause the game
+        pauseMenu.SetActive(false); // Hide the pause menu
         Time.timeScale = 1; // Resume time
     }
 }

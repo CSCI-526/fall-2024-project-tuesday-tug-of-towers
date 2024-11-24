@@ -7,37 +7,38 @@ using UnityEngine.EventSystems;
 public class Plot : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private SpriteRenderer sr;
-    [SerializeField] private Color hoverColor;
+    [SerializeField] private SpriteRenderer sr; // Reference to the SpriteRenderer
+    [SerializeField] private Color hoverColor; // Color when the mouse hovers over the plot
     [SerializeField] private Color selectedColor; // Color when a tower is selected for moving
-    [SerializeField] private int relocationCost = 50;
+    [SerializeField] private int relocationCost = 50; // Cost to relocate a tower
     [SerializeField] private GameObject popupPrefab; // Assign the PopUp prefab in the Inspector
     [SerializeField] private Canvas canvas; // Drag your "Option" Canvas here in the Inspector
     private GameObject popupInstance;
 
-    private GameObject tower;
-    private Color startColor;
-    public static int numberOfTurretsPlaced = 0;
+    private GameObject tower; // Reference to the placed tower
+    private Color startColor; // Initial color of the plot
+    public static int numberOfTurretsPlaced = 0; // Counter for placed turrets
 
     private static bool isRelocating = false; // Relocation mode flag
     private static Plot relocatingPlot = null; // Reference to the plot being relocated from
-    public static List<Plot> plotsWithTowers = new List<Plot>();
+    public static List<Plot> plotsWithTowers = new List<Plot>(); // List of plots with towers
 
-    private GameVariables gameVariables;
+    private GameVariables gameVariables; // Reference to game variables
 
     private void Start()
     {
-        startColor = sr.color;
-        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>();
+        startColor = sr.color; // Store the initial color
+        gameVariables = GameObject.Find("Variables").GetComponent<GameVariables>(); // Initialize game variables
     }
 
     private void OnMouseEnter()
     {
-        sr.color = hoverColor;
+        sr.color = hoverColor; // Change color on mouse hover
     }
 
     private void OnMouseExit()
     {
+        // Revert color when the mouse leaves the plot
         sr.color = (isRelocating && relocatingPlot == this) ? selectedColor : startColor;
     }
 
@@ -66,18 +67,17 @@ public class Plot : MonoBehaviour
         PlaceTower();
     }
 
-
     private void ShowPopup()
     {
         if (popupInstance != null)
         {
-            Destroy(popupInstance);
+            Destroy(popupInstance); // Destroy existing popup if any
         }
 
-        popupInstance = Instantiate(popupPrefab, canvas.transform);
+        popupInstance = Instantiate(popupPrefab, canvas.transform); // Create a new popup
 
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        popupInstance.transform.position = screenPosition + new Vector3(0, 50, 0);
+        popupInstance.transform.position = screenPosition + new Vector3(0, 50, 0); // Position the popup
 
         Button relocateButton = popupInstance.transform.Find("Relocate").GetComponent<Button>();
         Button sellButton = popupInstance.transform.Find("Sell").GetComponent<Button>();
@@ -97,7 +97,7 @@ public class Plot : MonoBehaviour
     {
         if (popupInstance != null)
         {
-            Destroy(popupInstance);
+            Destroy(popupInstance); // Destroy the popup instance
             popupInstance = null;
         }
     }
@@ -141,7 +141,7 @@ public class Plot : MonoBehaviour
 
         int sellAmount = Mathf.FloorToInt(BuildManager.main.GetTowerCost(tower) / 2f);
         LevelManager.main.IncreaseCurrency(sellAmount);
-        
+
         Destroy(tower);
         tower = null;
         gameVariables.resourcesInfo.remainingTowers++;
@@ -149,7 +149,7 @@ public class Plot : MonoBehaviour
         Debug.Log($"Tower sold for {sellAmount}!");
         ClosePopup();
     }
-    
+
     public void DestroyTower()
     {
         if (tower != null) // Ensure there is a tower to destroy
