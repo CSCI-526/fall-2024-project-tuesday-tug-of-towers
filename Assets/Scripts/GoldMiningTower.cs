@@ -46,10 +46,11 @@ public class GoldMiningTower : MonoBehaviour
         else
         {
             // Check for TutorialEnemyStats (Tutorial Level)
-            TutorialHealth tutorialEnemyStats = other.gameObject.GetComponent<TutorialHealth>();
-            if (tutorialEnemyStats != null)
+            // Handle case for enemies specific to tutorial levels
+            var tutorialEnemy = other.gameObject.GetComponent<TutorialHealth>();
+            if (tutorialEnemy != null)
             {
-                tutorialEnemyStats.TakeDamage(1000);
+                tutorialEnemy.ReceiveDamage(1000);
             }
         }
 
