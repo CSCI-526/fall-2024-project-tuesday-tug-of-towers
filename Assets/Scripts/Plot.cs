@@ -132,7 +132,7 @@ public class Plot : MonoBehaviour
             numberOfTurretsPlaced++;
             LevelManager.main.SpendCurrency(towerToBuild.cost);
             tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
-            BuildManager.main.placedTowerCount++;
+            gameVariables.resourcesInfo.remainingTowers--;
         }
     }
 
