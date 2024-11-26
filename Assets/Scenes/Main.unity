@@ -1289,7 +1289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Speed:'
+  m_text: 'Speed: 2'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7493,7 +7493,7 @@ GameObject:
   - component: {fileID: 516624009}
   - component: {fileID: 516624008}
   m_Layer: 5
-  m_Name: Increase Rate
+  m_Name: RemainingTowersText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7530,8 +7530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221bf75a8f237d648922b1e3cb7c503e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoType: 2
-  variableName: attackMoneyIncreasePeriod
+  infoType: 1
+  variableName: remainingTowers
 --- !u!114 &516624009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11852,7 +11852,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Health:'
+  m_text: 'Health: 4'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -22057,7 +22057,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Health:'
+  m_text: 'Health: 8'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -23212,7 +23212,6 @@ MonoBehaviour:
     cost: 200
     prefab: {fileID: 8427495842291404156, guid: b4ffcc767784c7247b66efdf621e33d9, type: 3}
   popupManager: {fileID: 285399607}
-  placedTowerCount: 0
 --- !u!1001 &1940336999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24273,7 +24272,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Speed:'
+  m_text: 'Speed: 3'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
