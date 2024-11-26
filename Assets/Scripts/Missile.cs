@@ -10,6 +10,7 @@ public class Missile : Bullet
 
     private void Start()
     {
+        bulletDamage *= 2.5f;
         currentSpeed = bulletSpeed;
         if (target != null)
         {
