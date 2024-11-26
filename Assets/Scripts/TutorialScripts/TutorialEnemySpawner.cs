@@ -67,16 +67,17 @@ public class TutorialEnemySpawner : MonoBehaviour
 
     private void SpawnSingleEnemy()
     {
+        // Always use the first enemy prefab (since it's a tutorial and you only have one)
         GameObject tprefabToSpawn = tenemyPrefabs[0];
+
+        // Spawn the enemy at the single start point defined in TutorialLevelManager
         Instantiate(tprefabToSpawn, TutorialLevelManager.main.tstartPoint.position, Quaternion.identity);
 
         tenemiesAlive++;
-        Debug.Log("Values of tenemiesAlive is:" + tenemiesAlive);
     }
     private void EnemyDestroyed()
     {
         tenemiesAlive--;
-        Debug.Log("Values of tenemiesAlive is:" + tenemiesAlive);
     }
     private void tSpawnEnemy()
     {

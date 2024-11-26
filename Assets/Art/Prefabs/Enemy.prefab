@@ -165,6 +165,8 @@ MonoBehaviour:
   rb: {fileID: 8369136343270304646}
   googleFormSubmit: {fileID: 0}
   moveSpeed: 2.3
+  systemsObject: {fileID: 0}
+  timeSystem: {fileID: 0}
 --- !u!114 &-69853461104454328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,5 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoints: 4.01
   currencyWorth: 50
-  cost: 25
+  cost: 20
+  startTime: 0
   floatingTextPrefab: {fileID: 7893733070681802948, guid: c61a56a4e9e12024fbdd95289227a1f1, type: 3}
+  timeSystem: {fileID: 0}

@@ -51,6 +51,24 @@ public class TutorialPlot : MonoBehaviour
         }
     }
 
+    /*  public void ActivateHighlight()
+      {
+          if (sr != null)
+          {
+              sr.color = highlightColor;
+              isHighlighted = true;
+          }
+      }
+
+      // Function to deactivate the highlight on Plot32
+      public void DeactivateHighlight()
+      {
+          if (isHighlighted && sr != null)
+          {
+              sr.color = startColor;
+              isHighlighted = false;
+          }
+      }*/
 
     private void Start()
     {
@@ -69,7 +87,7 @@ public class TutorialPlot : MonoBehaviour
         if (TutorialLevelManager.main.totalCount <= 0)
         {
             Debug.Log("Cannot place tower: totalCount is 0!");
-            return; 
+            return; // Prevent tower placement
         }
 
         TutorialTower tTowerToBuild = TutorialBuildManager.main.GetSelectedTTower();

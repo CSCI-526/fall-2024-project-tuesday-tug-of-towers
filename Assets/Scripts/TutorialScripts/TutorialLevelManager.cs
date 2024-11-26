@@ -7,7 +7,7 @@ public class TutorialLevelManager : MonoBehaviour
     public static TutorialLevelManager main;
 
     [Header("Game Settings")]
-    public int castleLife = 10;  
+    public int castleLife = 10;  // Initialize castle life to 10
     public int enemiesAtEndPoint = 0;
 
     public Transform tstartPoint;
@@ -39,6 +39,7 @@ public class TutorialLevelManager : MonoBehaviour
     {
         if (tamount <= tcurrency)
         {
+            //buy item
             tcurrency -= tamount;
             if (tutorialUIManager != null)
             {

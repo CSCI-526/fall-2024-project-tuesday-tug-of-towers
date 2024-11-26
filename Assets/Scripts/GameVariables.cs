@@ -16,9 +16,9 @@ public class SystemInfo : Info
 public class ResourcesInfo : Info
 {
     public int attackMoney = 100;
-    public int defenseMoney = 200;
+    public int defenseMoney = 300;
     public int defenseLife = 10;
-
+    public int remainingTower = 10;
     public const int maxAttackMoney = 400;
 }
 
@@ -32,7 +32,7 @@ public class TutorialInfo : Info
 {
     public bool continueSpawn = false;
     public bool towerPlaceable = false;
-    
+
 }
 
 public class GameVariables : MonoBehaviour
@@ -41,6 +41,9 @@ public class GameVariables : MonoBehaviour
     public ResourcesInfo resourcesInfo;
     public StatisticsInfo statisticsInfo;
     public TutorialInfo tutorialInfo;
+
+    public static string attackerName;
+    public static string defenderName;
 
     private GameObject systems;
 
