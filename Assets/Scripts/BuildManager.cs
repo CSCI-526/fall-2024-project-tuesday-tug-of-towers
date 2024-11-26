@@ -9,7 +9,7 @@ public class BuildManager : MonoBehaviour
     [Header("References")]
     //[SerializeField] private GameObject[] towerPrefabs;
     public Tower[] towers;
-    [SerializeField] private PopUpManager popupManager;
+    [SerializeField] public PopUpManager popupManager;
     private GameVariables gameVariables;
 
     private int selectedTower = 0;
@@ -36,7 +36,7 @@ public class BuildManager : MonoBehaviour
     {
         if(placedTowerCount == 10)
         {
-            popupManager.ShowMessage("Defender has reached the limit");
+            popupManager.ShowMessage("Defender has reached the tower limit");
             return;
         }
 

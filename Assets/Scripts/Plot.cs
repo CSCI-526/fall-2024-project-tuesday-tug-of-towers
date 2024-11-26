@@ -8,6 +8,7 @@ public class Plot : MonoBehaviour
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor;
     [SerializeField] private Color selectedColor; // Color when a tower is selected for moving
+    [SerializeField] private int relocationCost = 50;
 
     private GameObject tower;
     private Color startColor;
@@ -56,9 +57,19 @@ public class Plot : MonoBehaviour
 
     private void HandleTowerRelocation()
     {
+        if (gameVariables.resourcesInfo.defenseMoney < relocationCost)
+        {
+            BuildManager.main.popupManager.ShowMessage("You do not have enough money to relocate this tower!");
+            Debug.Log("Not enough money to relocate tower!");
+            return;
+        }
+
         // Move the selected tower to an empty plot
         if (tower == null)
         {
+            LevelManager.main.SpendCurrency(relocationCost);
+            
+            // Relocate the tower
             tower = selectedTower;
             tower.transform.position = transform.position;
 

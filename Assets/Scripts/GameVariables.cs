@@ -16,7 +16,7 @@ public class SystemInfo : Info
 public class ResourcesInfo : Info
 {
     public int attackMoney = 100;
-    public int defenseMoney = 300;
+    public int defenseMoney = 200;
     public int defenseLife = 10;
     public int remainingTower = 10;
     public const int maxAttackMoney = 400;
