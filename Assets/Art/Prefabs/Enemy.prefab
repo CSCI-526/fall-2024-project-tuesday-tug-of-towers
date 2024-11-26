@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.6792453, g: 0.06087574, b: 0.06087574, a: 1}
+  m_Color: {r: 0.6509804, g: 0.050980393, b: 0.043137256, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8369136343270304646}
   googleFormSubmit: {fileID: 0}
-  moveSpeed: 2.3
+  moveSpeed: 3
   systemsObject: {fileID: 0}
   timeSystem: {fileID: 0}
 --- !u!114 &-69853461104454328
@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e3036f31e2e44fe9cf69049032c29a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 4.01
+  hitPoints: 4
   currencyWorth: 50
   cost: 20
   startTime: 0

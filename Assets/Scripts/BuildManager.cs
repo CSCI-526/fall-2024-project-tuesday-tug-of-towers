@@ -10,6 +10,7 @@ public class BuildManager : MonoBehaviour
     //[SerializeField] private GameObject[] towerPrefabs;
     public Tower[] towers;
     [SerializeField] public PopUpManager popupManager;
+    [SerializeField] public int towerLimit = 6;
     private GameVariables gameVariables;
 
     private int selectedTower = 0;
@@ -23,9 +24,9 @@ public class BuildManager : MonoBehaviour
 
     public Tower GetSelectedTower()
     {
-        if (placedTowerCount < 10)
+        if (placedTowerCount < towerLimit)
         {
-            gameVariables.resourcesInfo.remainingTower = gameVariables.resourcesInfo.remainingTower - 1;
+            // gameVariables.resourcesInfo.remainingTower = towerLimit - placedTowerCount;
             return towers[selectedTower];
         }
             
@@ -34,7 +35,7 @@ public class BuildManager : MonoBehaviour
 
     public void SetSelectedTower(int _selectedTower)
     {
-        if(placedTowerCount == 10)
+        if(placedTowerCount == towerLimit)
         {
             popupManager.ShowMessage("Defender has reached the tower limit");
             return;
