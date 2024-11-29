@@ -39,7 +39,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         SetStartPoint(1); // Default to path 1
-        if (SceneManager.GetActiveScene().name == "Main"|| SceneManager.GetActiveScene().name == "Level2")
+        if (SceneManager.GetActiveScene().name == "Level3"|| SceneManager.GetActiveScene().name == "Level2")
         {
             DisableAllKeys();
             EnableOnlyThisKey(dKeyObject);
@@ -49,7 +49,7 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "Main" || SceneManager.GetActiveScene().name == "Level2")
+        if (SceneManager.GetActiveScene().name == "Level3" || SceneManager.GetActiveScene().name == "Level2")
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -58,7 +58,7 @@ public class LevelManager : MonoBehaviour
 
                 Debug.Log("Path 3 selected.");
             }
-            else if (Input.GetKeyDown(KeyCode.S) && SceneManager.GetActiveScene().name == "Main")
+            else if (Input.GetKeyDown(KeyCode.S) && SceneManager.GetActiveScene().name == "Level3")
             {
                 SetStartPoint(2);
                 EnableOnlyThisKey(sKeyObject);

@@ -295,7 +295,7 @@ public class TutorialUIManager : MonoBehaviour
 
         bool buttonClicked = false;
         NextButton.gameObject.SetActive(false);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu");
         mask1.SetActive(false);
     }
 

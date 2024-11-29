@@ -35,8 +35,8 @@ public class PlayerSelection : MonoBehaviour
             GameVariables.attackerName = attackerName;
             GameVariables.defenderName = defenderName;
 
-            // Load the Main scene (Scene 3)
-            SceneManager.LoadScene(3);
+            // Load the chosen level
+            SceneManager.LoadScene(PlayerPrefs.GetString("SelectedLevel"));
         }
         else
         {
@@ -48,6 +48,6 @@ public class PlayerSelection : MonoBehaviour
     public void OnMainMenuButtonClicked()
     {
         // Load the Main Menu scene (Scene 0)
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu");
     }
 }

@@ -23,6 +23,6 @@ public class DefenderWin : MonoBehaviour
     public void BackToMainMenu()
     {
         // Assuming the MainMenu scene is at index 0 in Build Settings
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu");
     }
 }
