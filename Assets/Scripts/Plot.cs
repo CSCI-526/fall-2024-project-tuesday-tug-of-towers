@@ -138,9 +138,10 @@ public class Plot : MonoBehaviour
 
         int sellAmount = Mathf.FloorToInt(BuildManager.main.GetTowerCost(tower) / 2f);
         LevelManager.main.IncreaseCurrency(sellAmount);
-
+        
         Destroy(tower);
         tower = null;
+        gameVariables.resourcesInfo.remainingTowers++;
 
         Debug.Log($"Tower sold for {sellAmount}!");
 
