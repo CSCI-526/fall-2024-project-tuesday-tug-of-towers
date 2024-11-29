@@ -26,13 +26,27 @@ public class BuildManager : MonoBehaviour
         {
             return towers[selectedTower];
         }
-            
+
         else return null;
     }
 
+    public int GetTowerCost(GameObject tower)
+    {
+        // Find the tower prefab in the towers array and return its cost
+        foreach (Tower t in towers)
+        {
+            if (t.prefab == tower)
+            {
+                return t.cost;
+            }
+        }
+        return 0; // Return 0 if tower is not found
+    }
+
+
     public void SetSelectedTower(int _selectedTower)
     {
-        if(gameVariables.resourcesInfo.remainingTowers <= 0)
+        if (gameVariables.resourcesInfo.remainingTowers <= 0)
         {
             popupManager.ShowMessage("Defender has reached the tower limit");
             return;
