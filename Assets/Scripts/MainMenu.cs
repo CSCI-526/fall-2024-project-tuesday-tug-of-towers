@@ -7,11 +7,29 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("PlayerSelection");
+    }
+
+    public void PlayLevel1()
+    {
+        PlayerPrefs.SetString("SelectedLevel", "Level1");
+        SceneManager.LoadScene("PlayerSelection");
+    }
+    
+    public void PlayLevel2()
+    {
+        PlayerPrefs.SetString("SelectedLevel", "Level2");
+        SceneManager.LoadScene("PlayerSelection");
+    }
+    
+    public void PlayLevel3()
+    {
+        PlayerPrefs.SetString("SelectedLevel", "Level3");
+        SceneManager.LoadScene("PlayerSelection");
     }
 
     public void PlayTutorial()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("TutorialScene");
     }
 }

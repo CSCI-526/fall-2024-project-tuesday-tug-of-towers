@@ -42,14 +42,14 @@ public class PauseMenuManager : MonoBehaviour
     private void RestartGame()
     {
         Time.timeScale = 1; // Resume time before restarting
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // Go back to the main menu
     private void GoToMainMenu()
     {
         Time.timeScale = 1; // Resume time before switching scenes
-        SceneManager.LoadScene(0); // Assuming Main Menu is Scene 0
+        SceneManager.LoadScene("Menu"); // Assuming Main Menu is Scene 0
     }
 
     // Close the pause menu and resume the game

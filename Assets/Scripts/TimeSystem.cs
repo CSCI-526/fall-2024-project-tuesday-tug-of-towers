@@ -8,9 +8,7 @@ using System.Linq; // Added for scene management
 
 public class TimeSystem : MonoBehaviour
 {
-   
-
-
+    
     public float countdownRate = 1f;
     public GoogleFormSubmit googleFormSubmit;
     [SerializeField] private PopUpManager CurrencyIncreasePupup;

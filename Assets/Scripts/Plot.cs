@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Plot : MonoBehaviour
 {
@@ -8,12 +10,18 @@ public class Plot : MonoBehaviour
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor;
     [SerializeField] private Color selectedColor; // Color when a tower is selected for moving
+    [SerializeField] private int relocationCost = 50;
+    [SerializeField] private GameObject popupPrefab; // Assign the PopUp prefab in the Inspector
+    [SerializeField] private Canvas canvas; // Drag your "Option" Canvas here in the Inspector
+    private GameObject popupInstance;
 
     private GameObject tower;
     private Color startColor;
     public static int numberOfTurretsPlaced = 0;
-    private static GameObject selectedTower = null; // Currently selected tower for moving
-    private static Plot selectedPlot = null; // Plot containing the selected tower
+
+    private static bool isRelocating = false; // Relocation mode flag
+    private static Plot relocatingPlot = null; // Reference to the plot being relocated from
+
     private GameVariables gameVariables;
 
     private void Start()
@@ -24,111 +32,157 @@ public class Plot : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        // Highlight the plot on hover
         sr.color = hoverColor;
     }
 
     private void OnMouseExit()
     {
-        // Reset the color when the mouse leaves
-        sr.color = (selectedTower != null && selectedPlot == this) ? selectedColor : startColor;
+        sr.color = (isRelocating && relocatingPlot == this) ? selectedColor : startColor;
     }
 
     private void OnMouseDown()
     {
-        // Handle tower relocation if a tower is already selected
-        if (selectedTower != null)
+        // Check if the pointer is over a UI element
+        if (EventSystem.current.IsPointerOverGameObject())
         {
-            HandleTowerRelocation();
+            Debug.Log("Pointer is over UI. Ignoring click.");
+            return; // Prevent the click from affecting the plot
+        }
+
+        // Proceed with normal click handling
+        if (isRelocating)
+        {
+            HandleRelocationMode();
             return;
         }
 
-        // Handle tower selection if there's a tower on this plot
         if (tower != null)
         {
-            SelectTower();
+            ShowPopup();
             return;
         }
 
-        // Handle normal tower placement
-        PlaceOrReplaceTower();
+        PlaceTower();
     }
 
-    private void HandleTowerRelocation()
+
+    private void ShowPopup()
     {
-        // Move the selected tower to an empty plot
+        if (popupInstance != null)
+        {
+            Destroy(popupInstance);
+        }
+
+        popupInstance = Instantiate(popupPrefab, canvas.transform);
+
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        popupInstance.transform.position = screenPosition + new Vector3(0, 50, 0);
+
+        Button relocateButton = popupInstance.transform.Find("Relocate").GetComponent<Button>();
+        Button sellButton = popupInstance.transform.Find("Sell").GetComponent<Button>();
+
+        if (relocateButton != null)
+        {
+            relocateButton.onClick.AddListener(StartRelocation);
+        }
+
+        if (sellButton != null)
+        {
+            sellButton.onClick.AddListener(SellTower);
+        }
+    }
+
+    private void ClosePopup()
+    {
+        if (popupInstance != null)
+        {
+            Destroy(popupInstance);
+            popupInstance = null;
+        }
+    }
+
+    private void HandleRelocationMode()
+    {
         if (tower == null)
         {
-            tower = selectedTower;
+            if (gameVariables.resourcesInfo.defenseMoney < relocationCost)
+            {
+                BuildManager.main.popupManager.ShowMessage("Not enough money to relocate!");
+                return;
+            }
+
+            LevelManager.main.SpendCurrency(relocationCost);
+
+            // Relocate the tower
+            tower = relocatingPlot.tower;
             tower.transform.position = transform.position;
 
-            // Clear the old plot's tower
-            selectedPlot.ClearTower();
+            relocatingPlot.ClearTower();
 
-            // Deselect the tower
-            selectedTower = null;
-            selectedPlot = null;
+            isRelocating = false;
+            relocatingPlot = null;
 
-            Debug.Log("Tower successfully moved!");
+            Debug.Log("Tower relocated successfully!");
         }
         else
         {
             Debug.Log("This plot is already occupied!");
         }
+
+        ClosePopup();
     }
 
-    private void SelectTower()
+    private void SellTower()
     {
-        selectedTower = tower;
-        selectedPlot = this;
-        sr.color = selectedColor; // Change color to indicate selection
-        Debug.Log("Tower selected for moving!");
+        if (tower == null) return;
+
+        int sellAmount = Mathf.FloorToInt(BuildManager.main.GetTowerCost(tower) / 2f);
+        LevelManager.main.IncreaseCurrency(sellAmount);
+        
+        Destroy(tower);
+        tower = null;
+        gameVariables.resourcesInfo.remainingTowers++;
+
+        Debug.Log($"Tower sold for {sellAmount}!");
+
+        ClosePopup();
     }
 
-    private void PlaceOrReplaceTower()
+    private void PlaceTower()
     {
-        // Get the tower to build from the BuildManager
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
-
-        // Return if no tower is selected to build
         if (towerToBuild == null) return;
 
-        // Check if the player can afford the tower
         if (towerToBuild.cost > gameVariables.resourcesInfo.defenseMoney)
         {
             Debug.Log("Can't afford this tower!");
             return;
         }
 
-        if (tower != null)
-        {
-            // Replace the existing tower if it's a different type
-            if (tower.name != towerToBuild.prefab.name)
-            {
-                Destroy(tower); // Destroy the old tower
-                LevelManager.main.SpendCurrency(towerToBuild.cost);
-                tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
-                Debug.Log("Replaced the existing tower with a new one!");
-            }
-            else
-            {
-                Debug.Log("Cannot place the same tower on this plot!");
-            }
-        }
-        else
-        {
-            // Deduct currency and place the tower
-            numberOfTurretsPlaced++;
-            LevelManager.main.SpendCurrency(towerToBuild.cost);
-            tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
-            BuildManager.main.placedTowerCount++;
-        }
+        numberOfTurretsPlaced++;
+        LevelManager.main.SpendCurrency(towerToBuild.cost);
+        tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
+        gameVariables.resourcesInfo.remainingTowers--;
     }
 
     private void ClearTower()
     {
-        // Clear the selected tower from the plot
         tower = null;
         sr.color = startColor;
+    }
+
+    private void StartRelocation()
+    {
+        if (tower == null)
+        {
+            Debug.Log("No tower to relocate!");
+            return;
+        }
+
+        isRelocating = true;
+        relocatingPlot = this;
+        Debug.Log("Relocation mode activated. Click on an empty plot to relocate.");
+
+        ClosePopup();
     }
 }

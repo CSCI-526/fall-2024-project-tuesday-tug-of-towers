@@ -163,7 +163,16 @@ public class TutorialUIManager : MonoBehaviour
         NextButton.gameObject.SetActive(false);
 
 
-        InstructText.text = "Your goal is to survive until the countdown ends.";
+        /*InstructText.text = "Your goal is to survive until the countdown ends.";
+        yield return new WaitForSeconds(3);
+        NextButton.gameObject.SetActive(true);
+
+        buttonClicked = false;
+        NextButton.onClick.AddListener(() => buttonClicked = true);
+        yield return new WaitUntil(() => buttonClicked);
+        NextButton.gameObject.SetActive(false);*/
+
+        InstructText.text = "Click the tower and build it on the map.";
         yield return new WaitForSeconds(3);
         NextButton.gameObject.SetActive(true);
 
@@ -172,7 +181,7 @@ public class TutorialUIManager : MonoBehaviour
         yield return new WaitUntil(() => buttonClicked);
         NextButton.gameObject.SetActive(false);
 
-        InstructText.text = "Click the tower and build it on the map.";
+        InstructText.text = "Click the tower on the plot to move it.";
         yield return new WaitForSeconds(3);
         NextButton.gameObject.SetActive(true);
 
@@ -295,7 +304,7 @@ public class TutorialUIManager : MonoBehaviour
 
         bool buttonClicked = false;
         NextButton.gameObject.SetActive(false);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu");
         mask1.SetActive(false);
     }
 

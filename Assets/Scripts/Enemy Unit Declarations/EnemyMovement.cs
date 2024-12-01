@@ -73,8 +73,7 @@ public class EnemyMovement : MonoBehaviour
         }
         else
         {
-            if (SceneManager.GetActiveScene().name == "Main")
-            if (SceneManager.GetActiveScene().name == "Main")
+            if (SceneManager.GetActiveScene().name == "Level3")
             {
                 Debug.LogError("GoogleFormManager GameObject not found!");
             }

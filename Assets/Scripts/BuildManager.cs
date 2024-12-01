@@ -9,11 +9,10 @@ public class BuildManager : MonoBehaviour
     [Header("References")]
     //[SerializeField] private GameObject[] towerPrefabs;
     public Tower[] towers;
-    [SerializeField] private PopUpManager popupManager;
+    [SerializeField] public PopUpManager popupManager;
     private GameVariables gameVariables;
 
     private int selectedTower = 0;
-    public int placedTowerCount = 0;
 
     private void Awake()
     {
@@ -23,20 +22,33 @@ public class BuildManager : MonoBehaviour
 
     public Tower GetSelectedTower()
     {
-        if (placedTowerCount < 10)
+        if (gameVariables.resourcesInfo.remainingTowers > 0)
         {
-            gameVariables.resourcesInfo.remainingTower = gameVariables.resourcesInfo.remainingTower - 1;
             return towers[selectedTower];
         }
-            
+
         else return null;
     }
 
+    public int GetTowerCost(GameObject tower)
+    {
+        // Find the tower prefab in the towers array and return its cost
+        foreach (Tower t in towers)
+        {
+            if (t.prefab == tower)
+            {
+                return t.cost;
+            }
+        }
+        return 0; // Return 0 if tower is not found
+    }
+
+
     public void SetSelectedTower(int _selectedTower)
     {
-        if(placedTowerCount == 10)
+        if (gameVariables.resourcesInfo.remainingTowers <= 0)
         {
-            popupManager.ShowMessage("Defender has reached the limit");
+            popupManager.ShowMessage("Defender has reached the tower limit");
             return;
         }
 
