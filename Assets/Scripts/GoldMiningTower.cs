@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GoldMiningTower : MonoBehaviour
@@ -9,6 +10,8 @@ public class GoldMiningTower : MonoBehaviour
     [SerializeField] private int goldAmount = 10;
     [SerializeField] private LayerMask castleMask;
     [SerializeField] private int health = 2;
+    [SerializeField] private TMP_Text popupText;
+    [SerializeField] private GameObject GoldMiningTowerPlot;
 
     private GameVariables gameVariables;
     private PopUpManager defenderCurrencyIncreasePopup;
@@ -30,7 +33,7 @@ public class GoldMiningTower : MonoBehaviour
 
             // Add gold to defender's currency (assuming there's a GameManager handling currency)
             gameVariables.resourcesInfo.defenseMoney += goldAmount;
-            defenderCurrencyIncreasePopup.ShowMessage("+" + goldAmount.ToString());
+            defenderCurrencyIncreasePopup.ShowMessage("+" + goldAmount.ToString(), popupText);
         }
     }
 
@@ -54,6 +57,11 @@ public class GoldMiningTower : MonoBehaviour
         }
 
         health--;
-        if(health == 0) Destroy(gameObject);
+        if (health == 0) 
+        {
+            Destroy(GoldMiningTowerPlot);
+            Destroy(gameObject);
+        }
+        
     }
 }
