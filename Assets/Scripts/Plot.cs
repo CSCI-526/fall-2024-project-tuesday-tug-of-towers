@@ -21,6 +21,7 @@ public class Plot : MonoBehaviour
 
     private static bool isRelocating = false; // Relocation mode flag
     private static Plot relocatingPlot = null; // Reference to the plot being relocated from
+    public static List<Plot> plotsWithTowers = new List<Plot>();
 
     private GameVariables gameVariables;
 
@@ -116,6 +117,8 @@ public class Plot : MonoBehaviour
             // Relocate the tower
             tower = relocatingPlot.tower;
             tower.transform.position = transform.position;
+            plotsWithTowers.Remove(relocatingPlot);
+            plotsWithTowers.Add(this);
 
             relocatingPlot.ClearTower();
 
@@ -142,10 +145,37 @@ public class Plot : MonoBehaviour
         Destroy(tower);
         tower = null;
         gameVariables.resourcesInfo.remainingTowers++;
-
+        plotsWithTowers.Remove(this);
         Debug.Log($"Tower sold for {sellAmount}!");
-
         ClosePopup();
+    }
+    
+    public void DestroyTower()
+    {
+        if (tower != null) // Ensure there is a tower to destroy
+        {
+            Destroy(tower); // Destroy the tower GameObject
+            tower = null; // Clear the tower reference
+            gameVariables.resourcesInfo.remainingTowers++; // Increment remaining towers
+
+            // Remove this plot from the list of plots with towers
+            plotsWithTowers.Remove(this);
+
+            Debug.Log($"Tower on plot {name} destroyed.");
+        }
+        else
+        {
+            Debug.LogWarning($"No tower to destroy on plot {name}.");
+        }
+    }
+
+    private void printListTowers()
+    {
+        Debug.Log("Updated Plots with Towers:");
+        foreach (var plot in plotsWithTowers)
+        {
+            Debug.Log($"Plot: {plot.name}, Position: {plot.transform.position}");
+        }
     }
 
     private void PlaceTower()
@@ -163,6 +193,7 @@ public class Plot : MonoBehaviour
         LevelManager.main.SpendCurrency(towerToBuild.cost);
         tower = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
         gameVariables.resourcesInfo.remainingTowers--;
+        plotsWithTowers.Add(this);
     }
 
     private void ClearTower()

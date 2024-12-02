@@ -42,8 +42,8 @@ public class GameVariables : MonoBehaviour
     public StatisticsInfo statisticsInfo;
     public TutorialInfo tutorialInfo;
 
-    public static string attackerName;
-    public static string defenderName;
+    public static string attackerName = "";
+    public static string defenderName = "";
 
     private GameObject systems;
 
