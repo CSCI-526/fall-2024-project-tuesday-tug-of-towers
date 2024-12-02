@@ -71,10 +71,8 @@ public class Minigame : MonoBehaviour
     
     private void DetectUserInput()
     {
-        Debug.Log("Detected User Input");
         if (!isInputAllowed || keySequence == null || keySequence.Count == 0)
         {
-            Debug.Log("Ignoring it");
             return; // Skip input detection if not allowed or sequence is empty
         }
 
@@ -86,18 +84,15 @@ public class Minigame : MonoBehaviour
         {
             currentKeyIndex++; // Progress to the next key
             UpdateProgressDisplay(); // Update progress after each correct key press
-            Debug.Log($"Correct key: {expectedKey}. Progress: {currentKeyIndex}/{keySequence.Count}");
 
             // Check if the user has completed the sequence
             if (currentKeyIndex >= keySequence.Count)
             {
-                Debug.Log("Minigame success! Sequence completed.");
                 MinigameSuccess();
             }
         }
         else if (Input.anyKeyDown) // Handle incorrect input
         {
-            Debug.Log("Incorrect key pressed!");
             MinigameFailure("Incorrect sequence! Minigame has ended.");
         }
     }
@@ -119,7 +114,6 @@ public class Minigame : MonoBehaviour
 
         StopAllCoroutines(); // Stop all coroutines to prevent further progress or countdown updates
         StartCoroutine(DestroyEnemyTowerAfterDelay(5f)); // Wait for 5 seconds before disabling the popup and applying the effect
-        Debug.Log("Minigame success! Enemy tower will be destroyed.");
     }
 
     private void MinigameFailure(String message)
@@ -150,7 +144,6 @@ public class Minigame : MonoBehaviour
         // If the timer runs out, fail the minigame
         if (currentTimeRemaining <= 0 && minigameActive)
         {
-            Debug.Log("Timer ran out! Minigame failed.");
             MinigameFailure("Time ran out! Minigame has ended.");
         }
     }
@@ -213,8 +206,6 @@ public class Minigame : MonoBehaviour
             minigameGameObject.SetActive(true); // Show the popup
             popupTimeoutCoroutine = StartCoroutine(HidePopupAfterDelay(10f)); // Start the timeout coroutine
         }
-
-        Debug.Log("Minigame activation popup triggered!");
     }
 
     private List<string> keySequence; // Stores the generated key sequence
@@ -287,8 +278,6 @@ public class Minigame : MonoBehaviour
         }
 
         isInputAllowed = true; // Enable input detection after sequence display
-        Debug.Log("User input detection enabled.");
-        
         StartCoroutine(InputCountdown()); // Start the countdown timer for user input
     }
 
@@ -300,7 +289,6 @@ public class Minigame : MonoBehaviour
         if (!minigameActive && minigameGameObject != null)
         {
             minigameGameObject.SetActive(false); // Hide the popup if "M" is not pressed
-            Debug.Log("Minigame popup hidden due to timeout.");
         }
     }
 }

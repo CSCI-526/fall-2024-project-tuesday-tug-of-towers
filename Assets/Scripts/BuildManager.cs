@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class BuildManager : MonoBehaviour
@@ -32,17 +33,25 @@ public class BuildManager : MonoBehaviour
 
     public int GetTowerCost(GameObject tower)
     {
-        // Find the tower prefab in the towers array and return its cost
+        if (tower == null)
+        {
+            return 0;
+        }
+
+        // Strip the "(Clone)" suffix from the tower's name
+        string towerName = tower.name.Replace("(Clone)", "").Trim();
+        
+        // Find the prefab in the towers array
         foreach (Tower t in towers)
         {
-            if (t.prefab == tower)
+            if (t.prefab.name == towerName) // Compare names without "(Clone)"
             {
                 return t.cost;
             }
         }
-        return 0; // Return 0 if tower is not found
+        
+        return 0;
     }
-
 
     public void SetSelectedTower(int _selectedTower)
     {

@@ -169,15 +169,6 @@ public class Plot : MonoBehaviour
         }
     }
 
-    private void printListTowers()
-    {
-        Debug.Log("Updated Plots with Towers:");
-        foreach (var plot in plotsWithTowers)
-        {
-            Debug.Log($"Plot: {plot.name}, Position: {plot.transform.position}");
-        }
-    }
-
     private void PlaceTower()
     {
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
