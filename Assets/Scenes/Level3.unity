@@ -12247,7 +12247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minigameGameObject: {fileID: 1018477771}
   TextObject: {fileID: 1748381845}
-  activationTimes: 770000002d000000
+  activationTimes: 5a0000001e000000
 --- !u!1001 &710814724
 PrefabInstance:
   m_ObjectHideFlags: 0
