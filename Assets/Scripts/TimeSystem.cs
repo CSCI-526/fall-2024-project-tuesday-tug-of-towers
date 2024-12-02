@@ -144,8 +144,6 @@ public class TimeSystem : MonoBehaviour
                 // Record money data every 5 seconds
                 if (moneyDataTimer >= moneyDataInterval && moneyDataIndex < attackMoneyData.Length)
                 {
-                    Debug.Log(gameVariables.resourcesInfo.attackMoney);
-                    Debug.Log(gameVariables.resourcesInfo.defenseMoney);
                     attackMoneyData[moneyDataIndex] = gameVariables.resourcesInfo.attackMoney;
                     defenderMoneyData[moneyDataIndex] = gameVariables.resourcesInfo.defenseMoney;
                     moneyDataIndex++;
