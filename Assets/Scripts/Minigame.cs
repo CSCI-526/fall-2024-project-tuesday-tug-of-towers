@@ -114,7 +114,7 @@ public class Minigame : MonoBehaviour
 
         if (textMeshPro != null)
         {
-            textMeshPro.text = "Correct sequence! Destroying one of the enemy's towers."; // Show success message
+            textMeshPro.text = "Correct sequence! Destroying one of the defender's towers."; // Show success message
         }
 
         StopAllCoroutines(); // Stop all coroutines to prevent further progress or countdown updates
@@ -178,7 +178,26 @@ public class Minigame : MonoBehaviour
 
         // Add logic to destroy one of the enemy's towers
         Debug.Log("Enemy tower destroyed!");
+        DestroyRandomTower();
     }
+    
+    private void DestroyRandomTower()
+    {
+        if (Plot.plotsWithTowers.Count == 0)
+        {
+            Debug.Log("No towers to destroy!");
+            return;
+        }
+
+        // Select a random plot with a tower
+        int randomIndex = UnityEngine.Random.Range(0, Plot.plotsWithTowers.Count);
+        Plot randomPlot = Plot.plotsWithTowers[randomIndex];
+
+        // Destroy the tower and update resources
+        randomPlot.DestroyTower();
+        Debug.Log("A tower has been destroyed!");
+    }
+
 
 
     private void TriggerPopup()
