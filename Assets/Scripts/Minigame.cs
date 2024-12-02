@@ -85,6 +85,7 @@ public class Minigame : MonoBehaviour
         if (Input.GetKeyDown(expectedKey.ToLower()))
         {
             currentKeyIndex++; // Progress to the next key
+            UpdateProgressDisplay(); // Update progress after each correct key press
             Debug.Log($"Correct key: {expectedKey}. Progress: {currentKeyIndex}/{keySequence.Count}");
 
             // Check if the user has completed the sequence
@@ -97,30 +98,61 @@ public class Minigame : MonoBehaviour
         else if (Input.anyKeyDown) // Handle incorrect input
         {
             Debug.Log("Incorrect key pressed!");
-            MinigameFailure();
+            MinigameFailure("Incorrect sequence! Minigame has ended.");
         }
     }
     
-    private void MinigameFailure()
+    private void UpdateProgressDisplay()
     {
-        minigameActive = false; // Mark the minigame as inactive
-        if (textMeshPro != null)
-        {
-            textMeshPro.text = "Incorrect sequence! Minigame has ended."; // Show failure message
-        }
-        StartCoroutine(DisablePopupAfterDelay(10f)); // Wait for 10 seconds before disabling the popup
-        Debug.Log("Minigame failed. Incorrect sequence entered.");
+        if (!minigameActive || textMeshPro == null) return;
+        textMeshPro.text = $"Enter the keys in order.\nProgress: {currentKeyIndex}/{keySequence.Count}\nTime Left: {Mathf.CeilToInt(currentTimeRemaining)}s";
     }
-
+    
     private void MinigameSuccess()
     {
         minigameActive = false; // Mark the minigame as inactive
+
         if (textMeshPro != null)
         {
             textMeshPro.text = "Correct sequence! Destroying one of the enemy's towers."; // Show success message
         }
+
+        StopAllCoroutines(); // Stop all coroutines to prevent further progress or countdown updates
         StartCoroutine(DestroyEnemyTowerAfterDelay(5f)); // Wait for 5 seconds before disabling the popup and applying the effect
         Debug.Log("Minigame success! Enemy tower will be destroyed.");
+    }
+
+    private void MinigameFailure(String message)
+    {
+        minigameActive = false; // Mark the minigame as inactive
+
+        if (textMeshPro != null)
+        {
+            textMeshPro.text = message; // Show failure message
+        }
+
+        StopAllCoroutines(); // Stop all coroutines to prevent further progress or countdown updates
+        StartCoroutine(DisablePopupAfterDelay(10f)); // Wait for 10 seconds before disabling the popup
+    }
+
+    
+    private IEnumerator InputCountdown()
+    {
+        while (minigameActive && currentTimeRemaining > 0)
+        {
+            yield return new WaitForSeconds(1f);
+            currentTimeRemaining--;
+
+            // Update the progress display with the remaining time
+            UpdateProgressDisplay();
+        }
+
+        // If the timer runs out, fail the minigame
+        if (currentTimeRemaining <= 0 && minigameActive)
+        {
+            Debug.Log("Timer ran out! Minigame failed.");
+            MinigameFailure("Time ran out! Minigame has ended.");
+        }
     }
     
     private IEnumerator DisablePopupAfterDelay(float delay)
@@ -169,13 +201,14 @@ public class Minigame : MonoBehaviour
     private List<string> keySequence; // Stores the generated key sequence
     private int currentKeyIndex; // Tracks the user's progress in the sequence
     private bool isInputAllowed = false; // Determines if user input is allowed
-    private float inputTimer = 10f; // Time limit for the user to complete the sequence
+    private float inputTimer = 13f; // Time limit for the user to complete the sequence
     private float currentTimeRemaining; // Tracks the remaining time for the user
     
     private void ActivateMinigame()
     {
         minigameActive = true; // Mark the minigame as active
         isInputAllowed = false; // Disable input detection initially
+        currentTimeRemaining = inputTimer; // Reset the timer for user input
 
         if (popupTimeoutCoroutine != null)
         {
@@ -189,7 +222,7 @@ public class Minigame : MonoBehaviour
             currentKeyIndex = 0; // Reset user's progress
             Debug.Log("Minigame activated! Keys to match: " + string.Join(" ", keySequence));
 
-            StartCoroutine(DisplayRandomKeysWithTimer(10f)); // Display random keys with countdown timer
+            StartCoroutine(DisplayRandomKeysWithTimer(13f)); // Display random keys with countdown timer
         }
     }
     
@@ -226,7 +259,7 @@ public class Minigame : MonoBehaviour
 
             while (timeRemaining > 0)
             {
-                textMeshPro.text = $"{randomKeys}\n\nTime Left: {Mathf.CeilToInt(timeRemaining)}s"; // Update text with timer
+                textMeshPro.text = $"Remember this key combination!\n{randomKeys}\nTime Left: {Mathf.CeilToInt(timeRemaining)}s"; // Update text with timer
                 yield return new WaitForSeconds(1f); // Wait for 1 second
                 timeRemaining -= 1f;
             }
@@ -236,6 +269,8 @@ public class Minigame : MonoBehaviour
 
         isInputAllowed = true; // Enable input detection after sequence display
         Debug.Log("User input detection enabled.");
+        
+        StartCoroutine(InputCountdown()); // Start the countdown timer for user input
     }
 
 
