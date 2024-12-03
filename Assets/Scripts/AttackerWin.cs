@@ -10,13 +10,20 @@ public class AttackerWin : MonoBehaviour
     private void Start()
     {
         // Update the text to show the attacker's name in all caps
-        if (!string.IsNullOrEmpty(GameVariables.attackerName))
+        if (titleText != null)
         {
-            titleText.text = GameVariables.attackerName.ToUpper() + " WON!!!";
+            if (!string.IsNullOrEmpty(GameVariables.attackerName))
+            {
+                titleText.text = GameVariables.attackerName.ToUpper() + " WON!!!";
+            }
+            else
+            {
+                titleText.text = "ATTACKER WON!!!"; // Fallback in case name is not set
+            }
         }
         else
         {
-            titleText.text = "ATTACKER WON!!!"; // Fallback in case name is not set
+            Debug.LogWarning("Title Text reference is not assigned in the Inspector.");
         }
     }
 
