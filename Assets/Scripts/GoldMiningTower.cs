@@ -9,6 +9,7 @@ public class GoldMiningTower : MonoBehaviour
     [SerializeField] private int goldAmount = 10;
     [SerializeField] private LayerMask castleMask;
     [SerializeField] private int health = 2;
+    [SerializeField] private GameObject GoldMiningTowerPlot;
 
     private GameVariables gameVariables;
     private PopUpManager defenderCurrencyIncreasePopup;
@@ -54,6 +55,10 @@ public class GoldMiningTower : MonoBehaviour
         }
 
         health--;
-        if(health == 0) Destroy(gameObject);
+        if (health == 0)
+        {
+            Destroy(GoldMiningTowerPlot);
+            Destroy(gameObject);
+        }
     }
 }
